@@ -2,8 +2,7 @@ package ru.milandr.courses.myshop.services;
 
 import org.springframework.stereotype.Service;
 import ru.milandr.courses.myshop.daos.OrderDao;
-
-import javax.transaction.Transactional;
+import ru.milandr.courses.myshop.entities.Order;
 
 @Service
 public class OrderService {
@@ -14,6 +13,9 @@ public class OrderService {
         this.orderDao = orderDao;
     }
 
-    public void demoMethod() {
+    public Order findOrder(Long orderId) {
+        Order order = orderDao.findOne(orderId);
+        System.out.println(order.toString());
+        return order;
     }
 }

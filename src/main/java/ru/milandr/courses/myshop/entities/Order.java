@@ -7,6 +7,7 @@ import ru.milandr.courses.myshop.entities.enums.OrderStatus;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 
 @Entity
@@ -29,9 +30,8 @@ public class Order {
     private Long userId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    //Поле таблицы users!
-    //JoinColumn indicates that this entity is the owner of the relationship
-    //(that is: the corresponding table has a column with a foreign key to the
+    // JoinColumn indicates that this entity is the owner of the relationship
+    // (that is: the corresponding table has a column with a foreign key to the
     // referenced table), whereas the attribute mappedBy indicates that the
     // entity in this side is the inverse of the relationship
     @JoinColumn(name = "USER_ID", insertable = false, updatable = false)
@@ -42,11 +42,20 @@ public class Order {
     @Column(name = "STATUS_CODE")
     private short statusCode;
 
-    public OrderStatus getOrderStatus() {
+    public OrderStatus getStatus() {
         return OrderStatus.parse(this.statusCode);
     }
 
-    public void setOrderStatus(OrderStatus orderStatus) {
+    public void setStatus(OrderStatus orderStatus) {
         this.statusCode = orderStatus.getValue();
     }
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "ORDERS_GOODS",
+            joinColumns = {@JoinColumn(name = "good_id")},
+            inverseJoinColumns = {@JoinColumn(name = "order_id")})
+    @Getter
+    @Setter
+    private List<Good> goods;
 }

@@ -49,5 +49,7 @@ public class User {
     private String passwordSalt;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @Getter
+    @Setter
     private List<Order> orders;
 }

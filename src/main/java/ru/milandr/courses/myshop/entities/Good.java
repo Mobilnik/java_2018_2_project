@@ -7,10 +7,11 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "GOODS")
-@ToString
+@ToString (exclude = "orders")
 public class Good {
 
     @Id
@@ -36,4 +37,11 @@ public class Good {
     @Getter
     @Setter
     private BigDecimal price;
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+            mappedBy = "goods")
+    @Getter
+    @Setter
+    private List<Order> orders;
 }

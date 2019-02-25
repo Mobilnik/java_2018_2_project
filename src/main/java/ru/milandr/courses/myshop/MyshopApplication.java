@@ -8,18 +8,12 @@ import ru.milandr.courses.myshop.services.OrderService;
 import ru.milandr.courses.myshop.services.UserService;
 
 @SpringBootApplication
-public class MyshopApplication {
+public class MyShopApplication {
 
     public static void main(String[] args) {
-        ApplicationContext  context = SpringApplication.run(MyshopApplication.class, args);
-        UserService userService = context.getBean(UserService.class);
-        userService.demoMethod();
-
-        OrderService orderService = context.getBean(OrderService.class);
-        orderService.demoMethod();
-
-        GoodService goodService = context.getBean(GoodService.class);
-        goodService.demoMethod();
+        ApplicationContext  context = SpringApplication.run(MyShopApplication.class, args);
+//        UserService userService = context.getBean(UserService.class);
+//        userService.findUser(1L);
     }
 
 }
