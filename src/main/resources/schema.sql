@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS users (
   id BIGINT PRIMARY KEY,
-  email VARCHAR(100) UNIQUE,
-  name VARCHAR(100) UNIQUE,
+  email VARCHAR(100) UNIQUE NOT NULL,
+  name VARCHAR(100) UNIQUE NOT NULL,
   photo BYTEA,
   password_hash VARCHAR(255),
   password_salt VARCHAR(32)
@@ -21,7 +21,7 @@ COMMENT ON SEQUENCE user_id_sequence IS 'Sequence for identifiers of table ''use
 
 CREATE TABLE IF NOT EXISTS goods (
   id BIGINT PRIMARY KEY,
-  name VARCHAR(100),
+  name VARCHAR(100) NOT NULL,
   photo BYTEA,
   price NUMERIC
 );

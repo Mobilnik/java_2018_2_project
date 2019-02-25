@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import ru.milandr.courses.myshop.daos.GoodDao;
 import ru.milandr.courses.myshop.entities.Good;
 
+import java.math.BigDecimal;
+
 @Service
 public class GoodService {
 
@@ -14,8 +16,5 @@ public class GoodService {
     }
 
     public void demoMethod() {
-        Good good = new Good();
-
-        goodDao.save(good);
     }
 }
