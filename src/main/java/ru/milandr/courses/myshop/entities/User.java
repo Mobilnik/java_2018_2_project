@@ -1,27 +1,32 @@
 package ru.milandr.courses.myshop.entities;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "USERS")
-@Getter
-@Setter
-@EqualsAndHashCode
 @ToString
 public class User {
+
     @Id
-    //generated ...
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq_gen")
+    @SequenceGenerator(name = "user_seq_gen", sequenceName = "user_id_sequence")
     private Long id;
+
+    @Column(name = "EMAIL")
+    private String email;
+
+    @Column(name = "NAME")
     private String name;
-    private String eMail;
+
+    @Column(name = "PHOTO")
+    private byte[] photo;
+
+    @Column(name = "PASSWORD_HASH")
     private String passwordHash;
+
+    @Column(name = "PASSWORD_SALT")
     private String passwordSalt;
 }
