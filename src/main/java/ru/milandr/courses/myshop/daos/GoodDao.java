@@ -6,4 +6,5 @@ import ru.milandr.courses.myshop.entities.Good;
 
 @Repository
 public interface GoodDao extends CrudRepository<Good, Long> {
+    //Danila was here
 }
