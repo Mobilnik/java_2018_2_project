@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.milandr.courses.myshop.entities.User;
+import ru.milandr.courses.myshop.dtos.UserDto;
 import ru.milandr.courses.myshop.services.UserService;
 
 @RestController
@@ -18,8 +18,7 @@ public class UserController {
     }
 
     @GetMapping("{userId}")
-    public User getUser(@PathVariable Long userId){
-        userService.findUser(userId);
-        return null;
+    public UserDto getUser(@PathVariable Long userId) {
+        return userService.getUser(userId);
     }
 }

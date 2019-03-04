@@ -1,4 +1,4 @@
-package ru.milandr.courses.myshop.dto;
+package ru.milandr.courses.myshop.dtos;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
@@ -7,16 +7,21 @@ import lombok.ToString;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @ToString
-public class OrderGoodDto {
-    @Getter
-    @Setter
-    private long orderId;
+public class UserDto {
 
     @Getter
     @Setter
-    private long goodId;
+    private Long id;
 
     @Getter
     @Setter
-    private int quantity;
+    private String email;
+
+    @Getter
+    @Setter
+    private String name;
+
+    @Getter
+    @Setter
+    private byte[] photo;
 }

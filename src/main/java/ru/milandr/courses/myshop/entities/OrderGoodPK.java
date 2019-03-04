@@ -13,9 +13,9 @@ public class OrderGoodPK implements Serializable {
 
     @Getter
     @Setter
-    private long orderId;
+    private Long orderId;
 
     @Getter
     @Setter
-    private long goodId;
+    private Long goodId;
 }

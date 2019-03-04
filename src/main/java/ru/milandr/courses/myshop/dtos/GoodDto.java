@@ -1,4 +1,4 @@
-package ru.milandr.courses.myshop.dto;
+package ru.milandr.courses.myshop.dtos;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;

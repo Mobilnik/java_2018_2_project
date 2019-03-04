@@ -15,13 +15,13 @@ public class OrderGood {
     @Column(name = "ORDER_ID")
     @Getter
     @Setter
-    private long orderId;
+    private Long orderId;
 
     @Id
     @Column(name = "GOOD_ID")
     @Getter
     @Setter
-    private long goodId;
+    private Long goodId;
 
     @Column(name = "QUANTITY")
     @Getter

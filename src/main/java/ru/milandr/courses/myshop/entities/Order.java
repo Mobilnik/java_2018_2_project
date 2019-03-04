@@ -50,7 +50,8 @@ public class Order {
         this.statusCode = orderStatus.getValue();
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @Getter
     @Setter
     private List<OrderGood> orderGoods;

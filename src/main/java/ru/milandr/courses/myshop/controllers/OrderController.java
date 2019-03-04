@@ -1,11 +1,10 @@
 package ru.milandr.courses.myshop.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import ru.milandr.courses.myshop.entities.User;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
+import ru.milandr.courses.myshop.dtos.OrderDto;
 import ru.milandr.courses.myshop.services.OrderService;
+import ru.milandr.courses.myshop.utils.BadRequestException;
 
 @RestController
 @RequestMapping("order")
@@ -18,8 +17,12 @@ public class OrderController {
     }
 
     @GetMapping("{orderId}")
-    public User getUser(@PathVariable Long orderId){
-        orderService.findOrder(orderId);
-        return null;
+    public OrderDto getUser(@PathVariable Long orderId) {
+        return orderService.findOrder(orderId);
+    }
+
+    @PostMapping(value = "create", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void createOrder(@RequestBody OrderDto orderDto) throws BadRequestException {
+        orderService.createOrder(orderDto);
     }
 }

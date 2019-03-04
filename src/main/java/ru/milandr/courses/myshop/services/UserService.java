@@ -2,9 +2,8 @@ package ru.milandr.courses.myshop.services;
 
 import org.springframework.stereotype.Service;
 import ru.milandr.courses.myshop.daos.UserDao;
+import ru.milandr.courses.myshop.dtos.UserDto;
 import ru.milandr.courses.myshop.entities.User;
-
-import javax.transaction.Transactional;
 
 @Service
 public class UserService {
@@ -20,9 +19,18 @@ public class UserService {
     // будет LazyInitializationException - orders не проинициализируется
     // @Transactional
     // При доступе из контроллера же неявно откроется транзакция на уровне запроса
-    public User findUser(Long userId){
+    public UserDto getUser(Long userId) {
         User user = userDao.findOne(userId);
-        System.out.println(user.toString());
-        return user;
+        return buildUserDtoFromUser(user);
+    }
+
+    private UserDto buildUserDtoFromUser(User user) {
+        UserDto userDto = new UserDto();
+        userDto.setId(user.getId());
+        userDto.setEmail(user.getEmail());
+        userDto.setName(user.getName());
+        userDto.setPhoto(user.getPhoto());
+
+        return userDto;
     }
 }

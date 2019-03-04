@@ -1,10 +1,10 @@
-package ru.milandr.courses.myshop.dto;
+package ru.milandr.courses.myshop.dtos;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import ru.milandr.courses.myshop.entities.OrderGood;
 import ru.milandr.courses.myshop.entities.enums.OrderStatus;
 
 import java.util.List;
@@ -21,17 +21,21 @@ public class OrderDto {
     @Setter
     private Long userId;
 
-    private short statusCode;
+    @Getter
+    @Setter
+    private Short statusCode;
 
+    @JsonIgnore
     public OrderStatus getStatus() {
         return OrderStatus.parse(this.statusCode);
     }
 
+    @JsonIgnore
     public void setStatus(OrderStatus orderStatus) {
         this.statusCode = orderStatus.getValue();
     }
 
     @Getter
     @Setter
-    private List<OrderGood> orderGoods;
+    private List<OrderGoodDto> orderGoods;
 }

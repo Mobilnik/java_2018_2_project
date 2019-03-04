@@ -1,21 +1,87 @@
 package ru.milandr.courses.myshop.services;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.milandr.courses.myshop.daos.OrderDao;
+import ru.milandr.courses.myshop.dtos.OrderDto;
+import ru.milandr.courses.myshop.dtos.OrderGoodDto;
 import ru.milandr.courses.myshop.entities.Order;
+import ru.milandr.courses.myshop.entities.OrderGood;
+import ru.milandr.courses.myshop.utils.BadRequestException;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static ru.milandr.courses.myshop.utils.ValidationUtils.validateIsNotNullWithException;
+import static ru.milandr.courses.myshop.utils.ValidationUtils.validateIsNullWithException;
 
 @Service
+@RequiredArgsConstructor
 public class OrderService {
 
-    private OrderDao orderDao;
+    private final OrderDao orderDao;
 
-    public OrderService(OrderDao orderDao) {
-        this.orderDao = orderDao;
+    public OrderDto findOrder(Long orderId) {
+        Order order = orderDao.findOne(orderId);
+        return buildOrderDtoFromOrder(order);
     }
 
-    public Order findOrder(Long orderId) {
-        Order order = orderDao.findOne(orderId);
-        System.out.println(order.toString());
+    private OrderDto buildOrderDtoFromOrder(Order order) {
+        OrderDto orderDto = new OrderDto();
+        orderDto.setId(order.getId());
+        orderDto.setStatus(order.getStatus());
+        orderDto.setUserId(order.getUserId());
+        orderDto.setOrderGoods(buildOrderGoodDtoListFromOrderGoodList(order.getOrderGoods()));
+
+        return orderDto;
+    }
+
+    private List<OrderGoodDto> buildOrderGoodDtoListFromOrderGoodList(List<OrderGood> orderGoods) {
+        return orderGoods.stream()
+                .map(orderGood -> {
+                    OrderGoodDto orderGoodDto = new OrderGoodDto();
+                    orderGood.setOrderId(orderGood.getOrderId());
+                    orderGoodDto.setGoodId(orderGood.getGoodId());
+                    orderGoodDto.setQuantity(orderGood.getQuantity());
+
+                    return orderGoodDto;
+                })
+                .collect(Collectors.toList());
+    }
+
+    public void createOrder(OrderDto orderDto) throws BadRequestException {
+        validateIsNotNullWithException(orderDto, "Null object can not be saved.");
+        validateIsNullWithException(orderDto.getId(), "Can not create an object with presented id");
+
+        //todo validate that current user is equal to the one mentioned in order when Security added
+
+        Order order = buildOrderFromOrderDto(orderDto);
+        orderDao.save(order);
+
+        order.setOrderGoods(buildOrderGoodListFromOrderDto(order, orderDto));
+        orderDao.save(order);
+    }
+
+
+    private Order buildOrderFromOrderDto(OrderDto orderDto) {
+        Order order = new Order();
+        order.setStatus(orderDto.getStatus());
+        order.setUserId(orderDto.getUserId());
+
         return order;
+    }
+
+    private List<OrderGood> buildOrderGoodListFromOrderDto(Order order, OrderDto orderDto) {
+        List<OrderGoodDto> orderGoodDtos = orderDto.getOrderGoods();
+
+        return orderGoodDtos.stream()
+                .map(orderGoodDto -> {
+                    OrderGood orderGood = new OrderGood();
+                    orderGood.setGoodId(orderGoodDto.getGoodId());
+                    orderGood.setQuantity(orderGoodDto.getQuantity());
+                    orderGood.setOrderId(order.getId());
+                    return orderGood;
+                })
+                .collect(Collectors.toList());
     }
 }
