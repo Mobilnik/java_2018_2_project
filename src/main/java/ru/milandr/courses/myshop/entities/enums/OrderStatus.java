@@ -16,13 +16,13 @@ public enum OrderStatus {
     }
 
     public static OrderStatus parse(short id) {
-        OrderStatus right = null; // Default
+        OrderStatus orderStatus = null; // Default
         for (OrderStatus item : OrderStatus.values()) {
             if (item.getValue() == id) {
-                right = item;
+                orderStatus = item;
                 break;
             }
         }
-        return right;
+        return orderStatus;
     }
 }

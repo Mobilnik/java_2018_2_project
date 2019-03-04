@@ -14,11 +14,11 @@ import java.util.List;
 public class User {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "ID")
     @Getter
     @Setter
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq_gen")
     @SequenceGenerator(name = "user_seq_gen", sequenceName = "user_id_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq_gen")
     private Long id;
 
     @Column(name = "EMAIL")
@@ -48,6 +48,7 @@ public class User {
     @Setter
     private String passwordSalt;
 
+    //mappedBy - имя поля в сущности Order
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @Getter
     @Setter

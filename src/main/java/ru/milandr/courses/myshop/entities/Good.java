@@ -38,10 +38,8 @@ public class Good {
     @Setter
     private BigDecimal price;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE},
-            mappedBy = "goods")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "good")
     @Getter
     @Setter
-    private List<Order> orders;
+    private List<OrderGood> orderGoods;
 }

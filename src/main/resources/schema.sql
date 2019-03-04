@@ -55,8 +55,9 @@ COMMENT ON SEQUENCE order_id_sequence IS 'Sequence for identifiers of table ''or
 
 
 CREATE TABLE IF NOT EXISTS orders_goods (
-  order_id BIGINT  REFERENCES orders (id),
-  good_id BIGINT REFERENCES orders (id),
+  order_id BIGINT  REFERENCES orders (id) ON DELETE CASCADE,
+  good_id BIGINT REFERENCES goods (id) ON DELETE CASCADE,
+  quantity INTEGER NOT NULL,
   CONSTRAINT orders_goods_pk PRIMARY KEY (order_id, good_id)
 );
 

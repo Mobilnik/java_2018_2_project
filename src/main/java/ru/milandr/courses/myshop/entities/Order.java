@@ -16,7 +16,7 @@ import java.util.List;
 public class Order {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "ID")
     @Getter
     @Setter
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_seq_gen")
@@ -50,12 +50,8 @@ public class Order {
         this.statusCode = orderStatus.getValue();
     }
 
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "ORDERS_GOODS",
-            joinColumns = {@JoinColumn(name = "good_id")},
-            inverseJoinColumns = {@JoinColumn(name = "order_id")})
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "order")
     @Getter
     @Setter
-    private List<Good> goods;
+    private List<OrderGood> orderGoods;
 }
