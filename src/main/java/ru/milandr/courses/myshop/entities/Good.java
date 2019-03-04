@@ -15,7 +15,7 @@ import java.util.List;
 public class Good {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "ID")
     @Getter
     @Setter
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "good_seq_gen")
