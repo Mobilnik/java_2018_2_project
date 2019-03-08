@@ -10,7 +10,6 @@ import ru.milandr.courses.myshop.dtos.OrderDto;
 import ru.milandr.courses.myshop.dtos.OrderGoodDto;
 import ru.milandr.courses.myshop.entities.Order;
 import ru.milandr.courses.myshop.entities.OrderGood;
-import ru.milandr.courses.myshop.entities.OrderGoodPK;
 import ru.milandr.courses.myshop.utils.BadRequestException;
 
 import java.util.List;
@@ -90,10 +89,5 @@ public class OrderService {
                     return orderGood;
                 })
                 .collect(Collectors.toList());
-    }
-
-    public void doSomething() {
-        OrderGood orderGood = orderGoodDao.findOne(new OrderGoodPK(14L, 1L));
-        log.info(orderGood.toString());
     }
 }
