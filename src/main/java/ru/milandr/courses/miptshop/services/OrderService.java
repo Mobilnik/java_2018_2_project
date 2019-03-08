@@ -15,8 +15,8 @@ import ru.milandr.courses.miptshop.utils.BadRequestException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ru.milandr.courses.miptshop.utils.ValidationUtils.validateIsNotNullWithException;
-import static ru.milandr.courses.miptshop.utils.ValidationUtils.validateIsNullWithException;
+import static ru.milandr.courses.miptshop.utils.ValidationUtils.validateIsNotNull;
+import static ru.milandr.courses.miptshop.utils.ValidationUtils.validateIsNull;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +24,6 @@ public class OrderService {
     private static final Logger log = LoggerFactory.getLogger(OrderService.class);
 
     private final OrderDao orderDao;
-    private final OrderGoodDao orderGoodDao;
 
     public OrderDto findOrder(Long orderId) {
         Order order = orderDao.findOne(orderId);
@@ -55,8 +54,8 @@ public class OrderService {
     }
 
     public void createOrder(OrderDto orderDto) throws BadRequestException {
-        validateIsNotNullWithException(orderDto, "Null object can not be saved.");
-        validateIsNullWithException(orderDto.getId(), "Can not create an object with presented id");
+        validateIsNotNull(orderDto, "Null object can not be saved.");
+        validateIsNull(orderDto.getId(), "Can not create an object with presented id");
 
         //todo validate that current user is equal to the one mentioned in order when Security added
 
