@@ -14,7 +14,7 @@ public class GoodService {
         this.goodDao = goodDao;
     }
 
-    public GoodDto findGood(Long goodId) {
+    public GoodDto getGood(Long goodId) {
         Good good = goodDao.findOne(goodId);
         return buildGoodDtoFromGood(good);
     }

@@ -1,6 +1,7 @@
 package ru.milandr.courses.miptshop.entities;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Table(name = "ORDERS_GOODS")
 @IdClass(OrderGoodPK.class)
 @ToString(exclude = {"order", "good"})
+@NoArgsConstructor
 public class OrderGood {
     @Id
     @Column(name = "ORDER_ID")
@@ -39,4 +41,10 @@ public class OrderGood {
     @Getter
     @Setter
     private Good good;
+
+    public OrderGood(Long orderId, Long goodId, int quantity) {
+        this.orderId = orderId;
+        this.goodId = goodId;
+        this.quantity = quantity;
+    }
 }

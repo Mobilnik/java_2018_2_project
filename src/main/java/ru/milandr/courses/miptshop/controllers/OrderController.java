@@ -4,7 +4,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.milandr.courses.miptshop.dtos.OrderDto;
 import ru.milandr.courses.miptshop.services.OrderService;
-import ru.milandr.courses.miptshop.utils.BadRequestException;
+import ru.milandr.courses.miptshop.common.utils.ValidationException;
 
 @RestController
 @RequestMapping("order")
@@ -18,11 +18,11 @@ public class OrderController {
 
     @GetMapping("{orderId}")
     public OrderDto getUser(@PathVariable Long orderId) {
-        return orderService.findOrder(orderId);
+        return orderService.getOrder(orderId);
     }
 
     @PostMapping(value = "create", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void createOrder(@RequestBody OrderDto orderDto) throws BadRequestException {
+    public void createOrder(@RequestBody OrderDto orderDto) throws ValidationException {
         orderService.createOrder(orderDto);
     }
 }

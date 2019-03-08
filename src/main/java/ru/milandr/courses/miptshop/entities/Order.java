@@ -1,6 +1,7 @@
 package ru.milandr.courses.miptshop.entities;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import ru.milandr.courses.miptshop.entities.enums.OrderStatus;
@@ -13,6 +14,7 @@ import java.util.List;
 @Entity
 @Table(name = "ORDERS")
 @ToString(exclude = "user")
+@NoArgsConstructor
 public class Order {
 
     @Id
@@ -55,4 +57,11 @@ public class Order {
     @Getter
     @Setter
     private List<OrderGood> orderGoods;
+
+    public Order(Long id, Long userId, OrderStatus orderStatus, List<OrderGood> orderGoods) {
+        this.id = id;
+        this.userId = userId;
+        this.statusCode = orderStatus.getValue();
+        this.orderGoods = orderGoods;
+    }
 }

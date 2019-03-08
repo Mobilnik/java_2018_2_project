@@ -4,19 +4,18 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import ru.milandr.courses.miptshop.common.utils.ValidationException;
 import ru.milandr.courses.miptshop.daos.OrderDao;
-import ru.milandr.courses.miptshop.daos.OrderGoodDao;
 import ru.milandr.courses.miptshop.dtos.OrderDto;
 import ru.milandr.courses.miptshop.dtos.OrderGoodDto;
 import ru.milandr.courses.miptshop.entities.Order;
 import ru.milandr.courses.miptshop.entities.OrderGood;
-import ru.milandr.courses.miptshop.utils.BadRequestException;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ru.milandr.courses.miptshop.utils.ValidationUtils.validateIsNotNull;
-import static ru.milandr.courses.miptshop.utils.ValidationUtils.validateIsNull;
+import static ru.milandr.courses.miptshop.common.utils.ValidationUtils.validateIsNotNull;
+import static ru.milandr.courses.miptshop.common.utils.ValidationUtils.validateIsNull;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +24,7 @@ public class OrderService {
 
     private final OrderDao orderDao;
 
-    public OrderDto findOrder(Long orderId) {
+    public OrderDto getOrder(Long orderId) {
         Order order = orderDao.findOne(orderId);
         return buildOrderDtoFromOrder(order);
     }
@@ -42,18 +41,11 @@ public class OrderService {
 
     private List<OrderGoodDto> buildOrderGoodDtoListFromOrderGoodList(List<OrderGood> orderGoods) {
         return orderGoods.stream()
-                .map(orderGood -> {
-                    OrderGoodDto orderGoodDto = new OrderGoodDto();
-                    orderGood.setOrderId(orderGood.getOrderId());
-                    orderGoodDto.setGoodId(orderGood.getGoodId());
-                    orderGoodDto.setQuantity(orderGood.getQuantity());
-
-                    return orderGoodDto;
-                })
+                .map(orderGood -> new OrderGoodDto(orderGood.getGoodId(), orderGood.getQuantity()))
                 .collect(Collectors.toList());
     }
 
-    public void createOrder(OrderDto orderDto) throws BadRequestException {
+    public void createOrder(OrderDto orderDto) throws ValidationException {
         validateIsNotNull(orderDto, "Null object can not be saved.");
         validateIsNull(orderDto.getId(), "Can not create an object with presented id");
 

@@ -1,6 +1,14 @@
 package ru.milandr.courses.miptshop.entities.enums;
 
+import ru.milandr.courses.miptshop.common.Constants;
+import ru.milandr.courses.miptshop.common.utils.OrderStatusException;
+
+/**
+ * Enum representing possible statuses for
+ * {@link ru.milandr.courses.miptshop.entities.Order} entity.
+ */
 public enum OrderStatus {
+
     UNACCEPTED((short) 0),
     ACCEPTED((short) 1),
     READY((short) 2);
@@ -11,18 +19,34 @@ public enum OrderStatus {
         this.value = value;
     }
 
+    /**
+     * @return short int code of order status.
+     */
     public short getValue() {
         return value;
     }
 
-    public static OrderStatus parse(short id) {
-        OrderStatus orderStatus = null; // Default
+
+    /**
+     * Translates a short int status code to an object representing
+     * an {@link ru.milandr.courses.miptshop.entities.Order} status.
+     *
+     * @param orderStatusCode short int code of order status
+     * @return an object of this class representing one of possible states
+     */
+    public static OrderStatus parse(short orderStatusCode) {
+        OrderStatus orderStatus = null;
         for (OrderStatus item : OrderStatus.values()) {
-            if (item.getValue() == id) {
+            if (item.getValue() == orderStatusCode) {
                 orderStatus = item;
                 break;
             }
         }
+
+        if (orderStatus == null) {
+            throw new OrderStatusException(Constants.NO_SUCH_ORDER_STATUS + orderStatusCode);
+        }
+
         return orderStatus;
     }
 }
