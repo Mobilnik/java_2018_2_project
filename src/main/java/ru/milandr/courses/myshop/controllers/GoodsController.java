@@ -17,8 +17,8 @@ public class GoodsController {
         this.goodService = goodService;
     }
 
-    @GetMapping("{goodId}")
-    public GoodDto getUser(@PathVariable Long goodId) {
+    @GetMapping("/{goodId}")
+    public GoodDto getGood(@PathVariable Long goodId) {
         return goodService.findGood(goodId);
     }
 }

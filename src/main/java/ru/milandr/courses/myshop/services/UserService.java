@@ -33,4 +33,9 @@ public class UserService {
 
         return userDto;
     }
+
+    public UserDto getUserByEmail(String userEmail) {
+        User user = userDao.findByEmail(userEmail);
+        return buildUserDtoFromUser(user);
+    }
 }

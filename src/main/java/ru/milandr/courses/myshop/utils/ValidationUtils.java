@@ -10,7 +10,7 @@ public class ValidationUtils {
     }
 
     public static void validateIsNullWithException(Object object,
-                                                      String exceptionMessage) throws BadRequestException {
+                                                   String exceptionMessage) throws BadRequestException {
         if (object != null) {
             throw new BadRequestException(exceptionMessage);
         }

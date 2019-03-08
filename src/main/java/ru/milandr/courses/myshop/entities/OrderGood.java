@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "ORDERS_GOODS")
 @IdClass(OrderGoodPK.class)
-@ToString (exclude = {"order", "good"})
+@ToString(exclude = {"order", "good"})
 public class OrderGood {
     @Id
     @Column(name = "ORDER_ID")

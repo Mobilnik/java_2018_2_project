@@ -11,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "GOODS")
-@ToString (exclude = "orders")
+@ToString(exclude = "orderGoods")
 public class Good {
 
     @Id

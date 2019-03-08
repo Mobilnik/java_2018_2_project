@@ -1,12 +1,16 @@
 package ru.milandr.courses.myshop.services;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.milandr.courses.myshop.daos.OrderDao;
+import ru.milandr.courses.myshop.daos.OrderGoodDao;
 import ru.milandr.courses.myshop.dtos.OrderDto;
 import ru.milandr.courses.myshop.dtos.OrderGoodDto;
 import ru.milandr.courses.myshop.entities.Order;
 import ru.milandr.courses.myshop.entities.OrderGood;
+import ru.milandr.courses.myshop.entities.OrderGoodPK;
 import ru.milandr.courses.myshop.utils.BadRequestException;
 
 import java.util.List;
@@ -18,8 +22,10 @@ import static ru.milandr.courses.myshop.utils.ValidationUtils.validateIsNullWith
 @Service
 @RequiredArgsConstructor
 public class OrderService {
+    private static final Logger log = LoggerFactory.getLogger(OrderService.class);
 
     private final OrderDao orderDao;
+    private final OrderGoodDao orderGoodDao;
 
     public OrderDto findOrder(Long orderId) {
         Order order = orderDao.findOne(orderId);
@@ -77,11 +83,17 @@ public class OrderService {
         return orderGoodDtos.stream()
                 .map(orderGoodDto -> {
                     OrderGood orderGood = new OrderGood();
+                    //to prohibit sending a fake request
+                    orderGood.setOrderId(order.getId());
                     orderGood.setGoodId(orderGoodDto.getGoodId());
                     orderGood.setQuantity(orderGoodDto.getQuantity());
-                    orderGood.setOrderId(order.getId());
                     return orderGood;
                 })
                 .collect(Collectors.toList());
+    }
+
+    public void doSomething() {
+        OrderGood orderGood = orderGoodDao.findOne(new OrderGoodPK(14L, 1L));
+        log.info(orderGood.toString());
     }
 }
