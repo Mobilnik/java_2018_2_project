@@ -1,11 +1,11 @@
 package ru.milandr.courses.miptshop.dtos;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@NoArgsConstructor
+@EqualsAndHashCode
 @ToString
 public class UserDto {
 
@@ -24,4 +24,11 @@ public class UserDto {
     @Getter
     @Setter
     private byte[] photo;
+
+    public UserDto(Long id, String email, String name, byte[] photo) {
+        this.id = id;
+        this.email = email;
+        this.name = name;
+        this.photo = photo;
+    }
 }

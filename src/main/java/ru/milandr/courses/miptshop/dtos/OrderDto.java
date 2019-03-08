@@ -25,16 +25,6 @@ public class OrderDto {
     @Setter
     private Short statusCode;
 
-    @JsonIgnore
-    public OrderStatus getStatus() {
-        return OrderStatus.parse(this.statusCode);
-    }
-
-    @JsonIgnore
-    public void setStatus(OrderStatus orderStatus) {
-        this.statusCode = orderStatus.getValue();
-    }
-
     @Getter
     @Setter
     private List<OrderGoodDto> orderGoods;
@@ -44,5 +34,21 @@ public class OrderDto {
         this.userId = userId;
         this.statusCode = orderStatus.getValue();
         this.orderGoods = orderGoods;
+    }
+
+    public OrderDto(Long userId, OrderStatus orderStatus, List<OrderGoodDto> orderGoods) {
+        this.userId = userId;
+        this.statusCode = orderStatus.getValue();
+        this.orderGoods = orderGoods;
+    }
+
+    @JsonIgnore
+    public OrderStatus getStatus() {
+        return OrderStatus.parse(this.statusCode);
+    }
+
+    @JsonIgnore
+    public void setStatus(OrderStatus orderStatus) {
+        this.statusCode = orderStatus.getValue();
     }
 }

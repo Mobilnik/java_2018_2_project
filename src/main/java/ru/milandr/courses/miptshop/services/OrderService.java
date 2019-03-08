@@ -11,6 +11,7 @@ import ru.milandr.courses.miptshop.dtos.OrderGoodDto;
 import ru.milandr.courses.miptshop.entities.Order;
 import ru.milandr.courses.miptshop.entities.OrderGood;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,19 +25,20 @@ public class OrderService {
 
     private final OrderDao orderDao;
 
-    public OrderDto getOrder(Long orderId) {
+    public OrderDto get(Long orderId) throws ValidationException {
+        validateIsNotNull(orderId, "No order id provided");
+
         Order order = orderDao.findOne(orderId);
+        validateIsNotNull(order, "No order with id " + orderId);
+
         return buildOrderDtoFromOrder(order);
     }
 
     private OrderDto buildOrderDtoFromOrder(Order order) {
-        OrderDto orderDto = new OrderDto();
-        orderDto.setId(order.getId());
-        orderDto.setStatus(order.getStatus());
-        orderDto.setUserId(order.getUserId());
-        orderDto.setOrderGoods(buildOrderGoodDtoListFromOrderGoodList(order.getOrderGoods()));
-
-        return orderDto;
+        return new OrderDto(order.getId(),
+                order.getUserId(),
+                order.getStatus(),
+                buildOrderGoodDtoListFromOrderGoodList(order.getOrderGoods()));
     }
 
     private List<OrderGoodDto> buildOrderGoodDtoListFromOrderGoodList(List<OrderGood> orderGoods) {
@@ -45,19 +47,24 @@ public class OrderService {
                 .collect(Collectors.toList());
     }
 
-    public void createOrder(OrderDto orderDto) throws ValidationException {
-        validateIsNotNull(orderDto, "Null object can not be saved.");
-        validateIsNull(orderDto.getId(), "Can not create an object with presented id");
+    public Order create(OrderDto orderDto) throws ValidationException {
+        validateIsNotNull(orderDto, "No Order DTO provided");
+        validateIsNull(orderDto.getId(), "Can not create an object with existing id");
 
-        //todo validate that current user is equal to the one mentioned in order when Security added
+        validateIsNotNull(orderDto.getUserId(), "No user specified for the order");
+        if (orderDto.getOrderGoods() == null) {
+            orderDto.setOrderGoods(new ArrayList<>());
+        }
+        //todo validate that current user is equal to the one mentioned in order when Security added + test it
 
         Order order = buildOrderFromOrderDto(orderDto);
         orderDao.save(order);
 
         order.setOrderGoods(buildOrderGoodListFromOrderDto(order, orderDto));
-        orderDao.save(order);
-    }
 
+        orderDao.save(order);
+        return order;
+    }
 
     private Order buildOrderFromOrderDto(OrderDto orderDto) {
         Order order = new Order();
@@ -69,16 +76,10 @@ public class OrderService {
 
     private List<OrderGood> buildOrderGoodListFromOrderDto(Order order, OrderDto orderDto) {
         List<OrderGoodDto> orderGoodDtos = orderDto.getOrderGoods();
-
         return orderGoodDtos.stream()
-                .map(orderGoodDto -> {
-                    OrderGood orderGood = new OrderGood();
-                    //to prohibit sending a fake request
-                    orderGood.setOrderId(order.getId());
-                    orderGood.setGoodId(orderGoodDto.getGoodId());
-                    orderGood.setQuantity(orderGoodDto.getQuantity());
-                    return orderGood;
-                })
+                .map(orderGoodDto -> new OrderGood(order.getId(),
+                        orderGoodDto.getGoodId(),
+                        orderGoodDto.getQuantity()))
                 .collect(Collectors.toList());
     }
 }

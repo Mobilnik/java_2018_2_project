@@ -1,17 +1,15 @@
 package ru.milandr.courses.miptshop.entities;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "ORDERS_GOODS")
 @IdClass(OrderGoodPK.class)
-@ToString(exclude = {"order", "good"})
 @NoArgsConstructor
+@EqualsAndHashCode
+@ToString(exclude = {"order", "good"})
 public class OrderGood {
     @Id
     @Column(name = "ORDER_ID")

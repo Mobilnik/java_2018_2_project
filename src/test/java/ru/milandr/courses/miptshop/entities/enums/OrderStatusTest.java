@@ -23,5 +23,4 @@ public class OrderStatusTest {
         orderStatus = OrderStatus.parse((short) 2L);
         assertThat(orderStatus).isEqualTo(OrderStatus.READY);
     }
-
 }

@@ -17,12 +17,12 @@ public class OrderController {
     }
 
     @GetMapping("{orderId}")
-    public OrderDto getUser(@PathVariable Long orderId) {
-        return orderService.getOrder(orderId);
+    public OrderDto getUser(@PathVariable Long orderId) throws ValidationException {
+        return orderService.get(orderId);
     }
 
     @PostMapping(value = "create", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void createOrder(@RequestBody OrderDto orderDto) throws ValidationException {
-        orderService.createOrder(orderDto);
+        orderService.create(orderDto);
     }
 }
