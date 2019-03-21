@@ -3,6 +3,9 @@ package ru.milandr.courses.miptshop.dtos;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @EqualsAndHashCode

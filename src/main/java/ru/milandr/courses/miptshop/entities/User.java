@@ -1,6 +1,7 @@
 package ru.milandr.courses.miptshop.entities;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "USERS")
+@NoArgsConstructor
 @ToString
 public class User {
 
@@ -53,4 +55,13 @@ public class User {
     @Getter
     @Setter
     private List<Order> orders;
+
+    public User(Long id, String email, String name, byte[] photo, String passwordHash, String passwordSalt) {
+        this.id = id;
+        this.email = email;
+        this.name = name;
+        this.photo = photo;
+        this.passwordHash = passwordHash;
+        this.passwordSalt = passwordSalt;
+    }
 }

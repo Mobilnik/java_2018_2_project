@@ -14,13 +14,13 @@ public class OrderStatusTest {
 
     @Test
     public void parseCorrectStatusCodeTest() {
-        OrderStatus orderStatus = OrderStatus.parse((short) 0L);
+        OrderStatus orderStatus = OrderStatus.parse((short) 0);
         assertThat(orderStatus).isEqualTo(OrderStatus.UNACCEPTED);
 
-        orderStatus = OrderStatus.parse((short) 1L);
+        orderStatus = OrderStatus.parse((short) 1);
         assertThat(orderStatus).isEqualTo(OrderStatus.ACCEPTED);
 
-        orderStatus = OrderStatus.parse((short) 2L);
+        orderStatus = OrderStatus.parse((short) 2);
         assertThat(orderStatus).isEqualTo(OrderStatus.READY);
     }
 }

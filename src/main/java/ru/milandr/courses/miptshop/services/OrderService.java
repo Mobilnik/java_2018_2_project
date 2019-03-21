@@ -31,6 +31,10 @@ public class OrderService {
         Order order = orderDao.findOne(orderId);
         validateIsNotNull(order, "No order with id " + orderId);
 
+        if (order.getOrderGoods() == null) {
+            order.setOrderGoods(new ArrayList<>());
+        }
+
         return buildOrderDtoFromOrder(order);
     }
 
@@ -80,6 +84,19 @@ public class OrderService {
                 .map(orderGoodDto -> new OrderGood(order.getId(),
                         orderGoodDto.getGoodId(),
                         orderGoodDto.getQuantity()))
+                .collect(Collectors.toList());
+    }
+
+    public List<OrderDto> getListByUserId(Long userId) throws ValidationException {
+        validateIsNotNull(userId, "No user id provided");
+
+        List<Order> orders = orderDao.findAllByUserId(userId);
+        validateIsNotNull(orders, "No orders for user " + userId);
+
+        //todo validate that current user is equal to the one mentioned in order when Security added + test it
+
+        return orders.stream()
+                .map(this::buildOrderDtoFromOrder)
                 .collect(Collectors.toList());
     }
 }

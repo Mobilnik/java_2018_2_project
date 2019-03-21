@@ -3,17 +3,19 @@ package ru.milandr.courses.miptshop.dtos;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
-import java.math.BigDecimal;
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class GoodDto {
+public class UserCreateDto {
 
     @Getter
     @Setter
     private Long id;
+
+    @Getter
+    @Setter
+    private String email;
 
     @Getter
     @Setter
@@ -25,12 +27,9 @@ public class GoodDto {
 
     @Getter
     @Setter
-    private BigDecimal price;
+    private String passwordHash;
 
-    public GoodDto(Long id, String name, byte[] photo, BigDecimal price) {
-        this.id = id;
-        this.name = name;
-        this.photo = photo;
-        this.price = price;
-    }
+    @Getter
+    @Setter
+    private String passwordSalt;
 }

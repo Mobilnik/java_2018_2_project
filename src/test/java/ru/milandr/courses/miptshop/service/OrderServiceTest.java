@@ -36,6 +36,11 @@ public class OrderServiceTest {
     }
 
     @Test(expected = ValidationException.class)
+    public void nullGetTest() throws ValidationException {
+        orderService.get(null);
+    }
+
+    @Test(expected = ValidationException.class)
     public void wrongIdGetTest() throws ValidationException {
         given(orderDao.findOne(1L)).willReturn(null);
         orderService.get(1L);
@@ -61,7 +66,49 @@ public class OrderServiceTest {
     }
 
     @Test(expected = ValidationException.class)
-    public void nullOrderCreateTest() throws ValidationException {
+    public void nullGetByUserIdTest() throws ValidationException {
+        orderService.getListByUserId(null);
+    }
+
+    @Test(expected = ValidationException.class)
+    public void wrongIdGetByUserIdTest() throws ValidationException {
+        given(orderDao.findAllByUserId(1L)).willReturn(null);
+        orderService.getListByUserId(null);
+    }
+
+    @Test
+    public void getListByUserIdTest() throws ValidationException {
+        OrderGood orderGood1 = new OrderGood(1L, 1L, 10);
+        OrderGood orderGood2 = new OrderGood(1L, 2L, 5);
+        List<OrderGood> orderGoods1 = List.of(orderGood1, orderGood2);
+        Order order1 = new Order(1L, 1L, OrderStatus.UNACCEPTED, orderGoods1);
+
+        OrderGood orderGood3 = new OrderGood(2L, 1L, 15);
+        OrderGood orderGood4 = new OrderGood(2L, 2L, 20);
+        List<OrderGood> orderGoods2 = List.of(orderGood3, orderGood4);
+        Order order2 = new Order(1L, 1L, OrderStatus.UNACCEPTED, orderGoods2);
+
+        given(orderDao.findAllByUserId(1L)).willReturn(List.of(order1, order2));
+
+        List<OrderDto> actualOrderDtoList = orderService.getListByUserId(1L);
+
+        OrderGoodDto orderGoodDto1 = new OrderGoodDto(1L, 10);
+        OrderGoodDto orderGoodDto2 = new OrderGoodDto(2L, 5);
+        List<OrderGoodDto> orderGoodDtos1 = List.of(orderGoodDto1, orderGoodDto2);
+        OrderDto expectedOrderDto1 = new OrderDto(1L, 1L, OrderStatus.UNACCEPTED, orderGoodDtos1);
+
+        OrderGoodDto orderGoodDto3 = new OrderGoodDto(1L, 15);
+        OrderGoodDto orderGoodDto4 = new OrderGoodDto(2L, 20);
+        List<OrderGoodDto> orderGoodDtos2 = List.of(orderGoodDto3, orderGoodDto4);
+        OrderDto expectedOrderDto2 = new OrderDto(1L, 1L, OrderStatus.UNACCEPTED, orderGoodDtos2);
+
+        List<OrderDto> expectedOrderDtoList = List.of(expectedOrderDto1, expectedOrderDto2);
+
+        assertThat(actualOrderDtoList).isEqualTo(expectedOrderDtoList);
+    }
+
+    @Test(expected = ValidationException.class)
+    public void nullCreateTest() throws ValidationException {
         orderService.create(null);
     }
 

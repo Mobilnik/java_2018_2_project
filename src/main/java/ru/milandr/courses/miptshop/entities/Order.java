@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "ORDERS")
 @NoArgsConstructor
-@EqualsAndHashCode()
+@EqualsAndHashCode
 @ToString(exclude = "user")
 public class Order {
 

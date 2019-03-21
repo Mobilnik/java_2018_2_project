@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.milandr.courses.miptshop.common.utils.ValidationException;
 import ru.milandr.courses.miptshop.dtos.UserDto;
 import ru.milandr.courses.miptshop.services.UserService;
 
@@ -18,12 +19,17 @@ public class UserController {
     }
 
     @GetMapping("{userId}")
-    public UserDto getUser(@PathVariable Long userId) {
-        return userService.getUser(userId);
+    public UserDto get(@PathVariable Long userId) throws ValidationException {
+        return userService.get(userId);
     }
 
-    @GetMapping("email/{userEmail}")
-    public UserDto getUser(@PathVariable String userEmail) {
-        return userService.getUserByEmail(userEmail);
+    @GetMapping("email/{email}")
+    public UserDto getByEmail(@PathVariable String email) throws ValidationException {
+        return userService.getByEmail(email);
+    }
+
+    @GetMapping("name/{name}")
+    public UserDto getByName(@PathVariable String name) throws ValidationException {
+        return userService.getByName(name);
     }
 }

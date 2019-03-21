@@ -1,8 +1,6 @@
 package ru.milandr.courses.miptshop.entities;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,6 +9,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "GOODS")
+@NoArgsConstructor
+@EqualsAndHashCode
 @ToString(exclude = "orderGoods")
 public class Good {
 
@@ -42,4 +42,11 @@ public class Good {
     @Getter
     @Setter
     private List<OrderGood> orderGoods;
+
+    public Good(Long id, String name, byte[] photo, BigDecimal price) {
+        this.id = id;
+        this.name = name;
+        this.photo = photo;
+        this.price = price;
+    }
 }

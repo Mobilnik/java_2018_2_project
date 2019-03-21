@@ -9,7 +9,16 @@ import ru.milandr.courses.miptshop.entities.User;
 @Repository
 public interface UserDao extends CrudRepository<User, Long> {
 
-    @Query("SELECT user from User user " +
-            "where user.email = :email")
+    @Query("SELECT user " +
+            "FROM User user " +
+            "WHERE user.email = :email")
     User findByEmail(@Param("email") String email);
+
+    @Query("SELECT user " +
+            "FROM User user " +
+            "WHERE user.name = :name")
+    User findByName(@Param("name") String name);
+
+    //Для самоконтроля!
+    //User findByEmail(String email);
 }
