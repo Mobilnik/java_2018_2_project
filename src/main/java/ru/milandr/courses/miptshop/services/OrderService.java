@@ -31,6 +31,8 @@ public class OrderService {
         Order order = orderDao.findOne(orderId);
         validateIsNotNull(order, "No order with id " + orderId);
 
+        //todo проверить, что не пытаются посмотреть не свой заказ
+
         if (order.getOrderGoods() == null) {
             order.setOrderGoods(new ArrayList<>());
         }
@@ -42,6 +44,7 @@ public class OrderService {
         return new OrderDto(order.getId(),
                 order.getUserId(),
                 order.getStatus(),
+                //order.getChangeDateTime(),
                 buildOrderGoodDtoListFromOrderGoodList(order.getOrderGoods()));
     }
 
@@ -74,6 +77,7 @@ public class OrderService {
         Order order = new Order();
         order.setStatus(orderDto.getStatus());
         order.setUserId(orderDto.getUserId());
+       // order.setChangeDateTime(orderDto.getChangeDateTime());
 
         return order;
     }

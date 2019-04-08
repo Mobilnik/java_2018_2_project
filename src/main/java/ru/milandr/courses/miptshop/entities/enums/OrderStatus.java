@@ -8,7 +8,7 @@ import ru.milandr.courses.miptshop.common.utils.OrderStatusException;
  * {@link ru.milandr.courses.miptshop.entities.Order} entity.
  */
 public enum OrderStatus {
-
+    CANCELED((short) -1),
     UNACCEPTED((short) 0),
     ACCEPTED((short) 1),
     READY((short) 2);

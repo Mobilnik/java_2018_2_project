@@ -16,6 +16,7 @@ import ru.milandr.courses.miptshop.entities.OrderGood;
 import ru.milandr.courses.miptshop.entities.enums.OrderStatus;
 import ru.milandr.courses.miptshop.services.OrderService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,10 +49,11 @@ public class OrderServiceTest {
 
     @Test
     public void getTest() throws ValidationException {
+        LocalDateTime now = LocalDateTime.now();
         OrderGood orderGood1 = new OrderGood(1L, 1L, 10);
         OrderGood orderGood2 = new OrderGood(1L, 2L, 5);
         List<OrderGood> orderGoods = List.of(orderGood1, orderGood2);
-        Order order = new Order(1L, 1L, OrderStatus.UNACCEPTED, orderGoods);
+        Order order = new Order(1L, 1L, OrderStatus.UNACCEPTED, now, orderGoods);
 
         given(orderDao.findOne(1L)).willReturn(order);
 
@@ -60,7 +62,7 @@ public class OrderServiceTest {
         OrderGoodDto orderGoodDto1 = new OrderGoodDto(1L, 10);
         OrderGoodDto orderGoodDto2 = new OrderGoodDto(2L, 5);
         List<OrderGoodDto> orderGoodDtos = List.of(orderGoodDto1, orderGoodDto2);
-        OrderDto expectedOrderDto = new OrderDto(1L, 1L, OrderStatus.UNACCEPTED, orderGoodDtos);
+        OrderDto expectedOrderDto = new OrderDto(1L, 1L, OrderStatus.UNACCEPTED, /*now,*/ orderGoodDtos);
 
         assertThat(actualOrderDto).isEqualTo(expectedOrderDto);
     }
@@ -78,15 +80,16 @@ public class OrderServiceTest {
 
     @Test
     public void getListByUserIdTest() throws ValidationException {
+        LocalDateTime now = LocalDateTime.now();
         OrderGood orderGood1 = new OrderGood(1L, 1L, 10);
         OrderGood orderGood2 = new OrderGood(1L, 2L, 5);
         List<OrderGood> orderGoods1 = List.of(orderGood1, orderGood2);
-        Order order1 = new Order(1L, 1L, OrderStatus.UNACCEPTED, orderGoods1);
+        Order order1 = new Order(1L, 1L, OrderStatus.UNACCEPTED, now, orderGoods1);
 
         OrderGood orderGood3 = new OrderGood(2L, 1L, 15);
         OrderGood orderGood4 = new OrderGood(2L, 2L, 20);
         List<OrderGood> orderGoods2 = List.of(orderGood3, orderGood4);
-        Order order2 = new Order(1L, 1L, OrderStatus.UNACCEPTED, orderGoods2);
+        Order order2 = new Order(1L, 1L, OrderStatus.UNACCEPTED, now, orderGoods2);
 
         given(orderDao.findAllByUserId(1L)).willReturn(List.of(order1, order2));
 
@@ -95,12 +98,12 @@ public class OrderServiceTest {
         OrderGoodDto orderGoodDto1 = new OrderGoodDto(1L, 10);
         OrderGoodDto orderGoodDto2 = new OrderGoodDto(2L, 5);
         List<OrderGoodDto> orderGoodDtos1 = List.of(orderGoodDto1, orderGoodDto2);
-        OrderDto expectedOrderDto1 = new OrderDto(1L, 1L, OrderStatus.UNACCEPTED, orderGoodDtos1);
+        OrderDto expectedOrderDto1 = new OrderDto(1L, 1L, OrderStatus.UNACCEPTED,/* now,*/ orderGoodDtos1);
 
         OrderGoodDto orderGoodDto3 = new OrderGoodDto(1L, 15);
         OrderGoodDto orderGoodDto4 = new OrderGoodDto(2L, 20);
         List<OrderGoodDto> orderGoodDtos2 = List.of(orderGoodDto3, orderGoodDto4);
-        OrderDto expectedOrderDto2 = new OrderDto(1L, 1L, OrderStatus.UNACCEPTED, orderGoodDtos2);
+        OrderDto expectedOrderDto2 = new OrderDto(1L, 1L, OrderStatus.UNACCEPTED, /*now, */orderGoodDtos2);
 
         List<OrderDto> expectedOrderDtoList = List.of(expectedOrderDto1, expectedOrderDto2);
 
@@ -114,21 +117,21 @@ public class OrderServiceTest {
 
     @Test(expected = ValidationException.class)
     public void existingIdCreateTest() throws ValidationException {
-        orderService.create(new OrderDto(1L, null, OrderStatus.UNACCEPTED, null));
+        orderService.create(new OrderDto(1L, null, OrderStatus.UNACCEPTED, /*null, */null));
     }
 
     @Test(expected = ValidationException.class)
     public void noUserIdCreateTest() throws ValidationException {
-        orderService.create(new OrderDto(null, null, OrderStatus.UNACCEPTED, null));
+        orderService.create(new OrderDto(null, null, OrderStatus.UNACCEPTED, /*null, */null));
     }
 
     @Test
     public void createTest() throws ValidationException {
-
+        LocalDateTime now = LocalDateTime.now();
         OrderGoodDto orderGoodDto1 = new OrderGoodDto(1L, 10);
         OrderGoodDto orderGoodDto2 = new OrderGoodDto(2L, 5);
         List<OrderGoodDto> orderGoodDtos = List.of(orderGoodDto1, orderGoodDto2);
-        OrderDto orderDto = new OrderDto(1L, OrderStatus.UNACCEPTED, orderGoodDtos);
+        OrderDto orderDto = new OrderDto(1L, OrderStatus.UNACCEPTED,/* now,*/ orderGoodDtos);
         Order actualOrder = orderService.create(orderDto);
         //todo это хак, подумать, как лучше
         actualOrder.setId(1L);
@@ -137,7 +140,7 @@ public class OrderServiceTest {
         OrderGood orderGood1 = new OrderGood(1L, 1L, 10);
         OrderGood orderGood2 = new OrderGood(1L, 2L, 5);
         List<OrderGood> orderGoods = List.of(orderGood1, orderGood2);
-        Order expectedOrder = new Order(1L, 1L, OrderStatus.UNACCEPTED, orderGoods);
+        Order expectedOrder = new Order(1L, 1L, OrderStatus.UNACCEPTED, now, orderGoods);
 
 
         assertThat(actualOrder).isEqualTo(expectedOrder);

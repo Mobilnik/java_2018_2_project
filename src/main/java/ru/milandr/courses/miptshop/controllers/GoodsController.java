@@ -8,12 +8,19 @@ import ru.milandr.courses.miptshop.common.utils.ValidationException;
 import ru.milandr.courses.miptshop.dtos.GoodDto;
 import ru.milandr.courses.miptshop.services.GoodService;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("good")
 public class GoodsController {
 
     private final GoodService goodService;
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<GoodDto>> getAll() {
+        return ResponseEntity.ok(goodService.getAll());
+    }
 
     @GetMapping(value = "/{goodId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<GoodDto> getGood(@PathVariable Long goodId) throws ValidationException {

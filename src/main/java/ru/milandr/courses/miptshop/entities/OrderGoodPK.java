@@ -1,10 +1,14 @@
 package ru.milandr.courses.miptshop.entities;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serializable;
 
+@EqualsAndHashCode
+@ToString
 public class OrderGoodPK implements Serializable {
 
     @Getter

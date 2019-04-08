@@ -22,6 +22,12 @@ public class Good {
     @SequenceGenerator(name = "good_seq_gen", sequenceName = "good_id_sequence", allocationSize = 1)
     private Long id;
 
+    @Column(name = "CATEGORY_ID")
+    @NotNull
+    @Getter
+    @Setter
+    private Long goodCategoryId;
+
     @Column(name = "NAME")
     @NotNull
     @Getter
@@ -42,6 +48,12 @@ public class Good {
     @Getter
     @Setter
     private List<OrderGood> orderGoods;
+
+    @ManyToOne(fetch =  FetchType.LAZY)
+    @JoinColumn(name = "CATEGORY_ID", insertable = false, updatable = false)
+    @Getter
+    @Setter
+    private GoodCategory category;
 
     public Good(Long id, String name, byte[] photo, BigDecimal price) {
         this.id = id;

@@ -8,6 +8,10 @@ import ru.milandr.courses.miptshop.daos.GoodDao;
 import ru.milandr.courses.miptshop.dtos.GoodDto;
 import ru.milandr.courses.miptshop.entities.Good;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static ru.milandr.courses.miptshop.common.utils.ValidationUtils.validateIsNotNull;
 import static ru.milandr.courses.miptshop.common.utils.ValidationUtils.validateIsNull;
 
@@ -24,6 +28,12 @@ public class GoodService {
         Good good = goodDao.findOne(goodId);
         validateIsNotNull(good, "No Good with id " + goodId);
         return buildGoodDtoFromGood(good);
+    }
+
+    public List<GoodDto> getAll() {
+        return goodDao.findAllBy().stream()
+                 .map(this::buildGoodDtoFromGood)
+                 .collect(Collectors.toList());
     }
 
     private GoodDto buildGoodDtoFromGood(Good good) {

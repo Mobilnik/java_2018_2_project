@@ -5,6 +5,8 @@ import ru.milandr.courses.miptshop.entities.enums.OrderStatus;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 
@@ -29,11 +31,11 @@ public class Order {
     @Setter
     private Long userId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    // JoinColumn indicates that this entity is the owner of the relationship
+    // @JoinColumn indicates that this entity is the owner of the relationship
     // (that is: the corresponding table has a column with a foreign key to the
     // referenced table), whereas the attribute mappedBy indicates that the
     // entity in this side is the inverse of the relationship
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", insertable = false, updatable = false)
     @Getter
     @Setter
@@ -41,6 +43,11 @@ public class Order {
 
     @Column(name = "STATUS_CODE")
     private short statusCode;
+
+    @Column(name = "CHANGE_DATE_TIME")
+    @Getter
+    @Setter
+    private LocalDateTime changeDateTime;
 
     public OrderStatus getStatus() {
         return OrderStatus.parse(this.statusCode);
@@ -56,10 +63,13 @@ public class Order {
     @Setter
     private List<OrderGood> orderGoods;
 
-    public Order(Long id, Long userId, OrderStatus orderStatus, List<OrderGood> orderGoods) {
+    public Order(Long id, Long userId, OrderStatus orderStatus,
+                 LocalDateTime changeDateTime,
+                 List<OrderGood> orderGoods) {
         this.id = id;
         this.userId = userId;
         this.statusCode = orderStatus.getValue();
+        this.changeDateTime = changeDateTime;
         this.orderGoods = orderGoods;
     }
 }

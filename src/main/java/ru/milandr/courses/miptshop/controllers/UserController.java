@@ -1,9 +1,6 @@
 package ru.milandr.courses.miptshop.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.milandr.courses.miptshop.common.utils.ValidationException;
 import ru.milandr.courses.miptshop.dtos.UserDto;
 import ru.milandr.courses.miptshop.services.UserService;
