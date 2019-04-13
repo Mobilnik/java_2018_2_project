@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class GoodDto {
+public class ProductDto {
 
     @Getter
     @Setter
@@ -27,7 +27,7 @@ public class GoodDto {
     @Setter
     private BigDecimal price;
 
-    public GoodDto(Long id, String name, byte[] photo, BigDecimal price) {
+    public ProductDto(Long id, String name, byte[] photo, BigDecimal price) {
         this.id = id;
         this.name = name;
         this.photo = photo;

@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 @EqualsAndHashCode
 @ToString
-public class OrderGoodPK implements Serializable {
+public class OrderProductPK implements Serializable {
 
     @Getter
     @Setter
@@ -17,13 +17,13 @@ public class OrderGoodPK implements Serializable {
 
     @Getter
     @Setter
-    private Long goodId;
+    private Long productId;
 
-    public OrderGoodPK() {
+    public OrderProductPK() {
     }
 
-    public OrderGoodPK(Long orderId, Long goodId) {
+    public OrderProductPK(Long orderId, Long productId) {
         this.orderId = orderId;
-        this.goodId = goodId;
+        this.productId = productId;
     }
 }

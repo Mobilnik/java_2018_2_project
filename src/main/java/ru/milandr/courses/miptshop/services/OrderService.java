@@ -9,7 +9,7 @@ import ru.milandr.courses.miptshop.daos.OrderDao;
 import ru.milandr.courses.miptshop.dtos.OrderDto;
 import ru.milandr.courses.miptshop.dtos.OrderProductDto;
 import ru.milandr.courses.miptshop.entities.Order;
-import ru.milandr.courses.miptshop.entities.OrderGood;
+import ru.milandr.courses.miptshop.entities.OrderProduct;
 import ru.milandr.courses.miptshop.entities.enums.OrderStatus;
 
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class OrderService {
         Order order = buildOrderFromOrderDto(orderDto);
         orderDao.save(order);
 
-        order.setOrderGoods(buildOrderGoodListFromOrderDto(order, orderDto));
+        order.setOrderProducts(buildOrderProductsFromOrderDto(order, orderDto));
 
         orderDao.save(order);
         return order;
@@ -54,40 +54,40 @@ public class OrderService {
 
         //todo проверить, что не пытаются посмотреть не свой заказ
 
-        if (order.getOrderGoods() == null) {
-            order.setOrderGoods(new ArrayList<>());
+        if (order.getOrderProducts() == null) {
+            order.setOrderProducts(new ArrayList<>());
         }
 
-        return buildOrderDtoFromOrder(order);
+        return buildOrderDto(order);
     }
 
 
     public OrderDto getCart() throws ValidationException {
         Order cartOrder = getOrderWithCartStatus();
-        return buildOrderDtoFromOrder(cartOrder);
+        return buildOrderDto(cartOrder);
     }
 
 
-    private OrderDto buildOrderDtoFromOrder(Order order) {
+    private OrderDto buildOrderDto(Order order) {
         return new OrderDto(order.getId(),
                 order.getUserId(),
                 order.getStatus(),
                 //order.getChangeDateTime(),
-                buildOrderGoodDtoListFromOrderGoodList(order.getOrderGoods()));
+                buildOrderProductDtos(order.getOrderProducts()));
     }
 
 
-    private List<OrderProductDto> buildOrderGoodDtoListFromOrderGoodList(List<OrderGood> orderGoods) {
-        if (orderGoods == null) {
+    private List<OrderProductDto> buildOrderProductDtos(List<OrderProduct> orderProducts) {
+        if (orderProducts == null) {
             return new ArrayList<>();
         }
 
-        List<OrderProductDto> orderProductDtos =  orderGoods.stream()
-                .map(orderGood -> new OrderProductDto(
-                        orderGood.getGoodId(),
-                        orderGood.getGood().getName(),
-                        orderGood.getGood().getPrice(),
-                        orderGood.getQuantity()))
+        List<OrderProductDto> orderProductDtos =  orderProducts.stream()
+                .map(orderProduct -> new OrderProductDto(
+                        orderProduct.getProductId(),
+                        orderProduct.getProduct().getName(),
+                        orderProduct.getProduct().getPrice(),
+                        orderProduct.getQuantity()))
                 .collect(Collectors.toList());
         log.info(orderProductDtos.toString());
         return orderProductDtos;
@@ -123,7 +123,7 @@ public class OrderService {
     }
 
 
-    private List<OrderGood> buildOrderGoodListFromOrderDto(Order order, OrderDto orderDto) {
+    private List<OrderProduct> buildOrderProductsFromOrderDto(Order order, OrderDto orderDto) {
         List<OrderProductDto> orderProductDtos = orderDto.getProducts();
 
         if (orderProductDtos == null) {
@@ -131,7 +131,7 @@ public class OrderService {
         }
 
         return orderProductDtos.stream()
-                .map(orderProductDto -> new OrderGood(order.getId(),
+                .map(orderProductDto -> new OrderProduct(order.getId(),
                         orderProductDto.getProductId(),
                         orderProductDto.getQuantity()))
                 .collect(Collectors.toList());
@@ -147,7 +147,7 @@ public class OrderService {
         //todo validate that current user is equal to the one mentioned in order when Security added + test it
 
         return orders.stream()
-                .map(this::buildOrderDtoFromOrder)
+                .map(this::buildOrderDto)
                 .collect(Collectors.toList());
     }
 }

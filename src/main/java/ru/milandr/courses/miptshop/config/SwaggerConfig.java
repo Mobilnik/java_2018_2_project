@@ -55,7 +55,7 @@ public class SwaggerConfig {
         .apis(RequestHandlerSelectors.basePackage("ru.milandr.courses.miptshop.controllers"))
         .paths(Predicates.or(
              PathSelectors.ant("/user/*"),
-             PathSelectors.ant("/good/*"),
+             PathSelectors.ant("/product/*"),
              PathSelectors.ant("/order/*")))
         .paths(PathSelectors.any())
         .build()

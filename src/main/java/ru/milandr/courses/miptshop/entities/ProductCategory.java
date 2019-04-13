@@ -6,11 +6,11 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "GOOD_CATEGORIES")
+@Table(name = "PRODUCT_CATEGORIES")
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class GoodCategory {
+public class ProductCategory {
 
     @Id
     @Column(name = "ID")
@@ -27,9 +27,9 @@ public class GoodCategory {
     @OneToMany(mappedBy = "category")
     @Getter
     @Setter
-    private List<Good> goods;
+    private List<Product> products;
 
-    public GoodCategory(Long id, String name) {
+    public ProductCategory(Long id, String name) {
         this.id = id;
         this.name = name;
     }

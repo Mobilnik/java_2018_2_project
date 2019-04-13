@@ -12,7 +12,7 @@ import ru.milandr.courses.miptshop.daos.OrderDao;
 import ru.milandr.courses.miptshop.dtos.OrderDto;
 import ru.milandr.courses.miptshop.dtos.OrderProductDto;
 import ru.milandr.courses.miptshop.entities.Order;
-import ru.milandr.courses.miptshop.entities.OrderGood;
+import ru.milandr.courses.miptshop.entities.OrderProduct;
 import ru.milandr.courses.miptshop.entities.enums.OrderStatus;
 import ru.milandr.courses.miptshop.services.OrderService;
 
@@ -51,10 +51,10 @@ public class OrderServiceTest {
     @Test
     public void getTest() throws ValidationException {
         LocalDateTime now = LocalDateTime.now();
-        OrderGood orderGood1 = new OrderGood(1L, 1L, 10);
-        OrderGood orderGood2 = new OrderGood(1L, 2L, 5);
-        List<OrderGood> orderGoods = List.of(orderGood1, orderGood2);
-        Order order = new Order(1L, 1L, OrderStatus.UNACCEPTED, now, orderGoods);
+        OrderProduct orderProduct1 = new OrderProduct(1L, 1L, 10);
+        OrderProduct orderProduct2 = new OrderProduct(1L, 2L, 5);
+        List<OrderProduct> orderProducts = List.of(orderProduct1, orderProduct2);
+        Order order = new Order(1L, 1L, OrderStatus.UNACCEPTED, now, orderProducts);
 
         given(orderDao.findOne(1L)).willReturn(order);
 
@@ -82,15 +82,15 @@ public class OrderServiceTest {
     @Test
     public void getListByUserIdTest() throws ValidationException {
         LocalDateTime now = LocalDateTime.now();
-        OrderGood orderGood1 = new OrderGood(1L, 1L, 10);
-        OrderGood orderGood2 = new OrderGood(1L, 2L, 5);
-        List<OrderGood> orderGoods1 = List.of(orderGood1, orderGood2);
-        Order order1 = new Order(1L, 1L, OrderStatus.UNACCEPTED, now, orderGoods1);
+        OrderProduct orderProduct1 = new OrderProduct(1L, 1L, 10);
+        OrderProduct orderProduct2 = new OrderProduct(1L, 2L, 5);
+        List<OrderProduct> orderProducts1 = List.of(orderProduct1, orderProduct2);
+        Order order1 = new Order(1L, 1L, OrderStatus.UNACCEPTED, now, orderProducts1);
 
-        OrderGood orderGood3 = new OrderGood(2L, 1L, 15);
-        OrderGood orderGood4 = new OrderGood(2L, 2L, 20);
-        List<OrderGood> orderGoods2 = List.of(orderGood3, orderGood4);
-        Order order2 = new Order(1L, 1L, OrderStatus.UNACCEPTED, now, orderGoods2);
+        OrderProduct orderProduct3 = new OrderProduct(2L, 1L, 15);
+        OrderProduct orderProduct4 = new OrderProduct(2L, 2L, 20);
+        List<OrderProduct> orderProducts2 = List.of(orderProduct3, orderProduct4);
+        Order order2 = new Order(1L, 1L, OrderStatus.UNACCEPTED, now, orderProducts2);
 
         given(orderDao.findAllByUserId(1L)).willReturn(List.of(order1, order2));
 
@@ -136,12 +136,12 @@ public class OrderServiceTest {
         Order actualOrder = orderService.create(orderDto);
         //todo это хак, подумать, как лучше
         actualOrder.setId(1L);
-        actualOrder.getOrderGoods().forEach(orderGood -> orderGood.setOrderId(actualOrder.getId()));
+        actualOrder.getOrderProducts().forEach(orderProduct -> orderProduct.setOrderId(actualOrder.getId()));
 
-        OrderGood orderGood1 = new OrderGood(1L, 1L, 10);
-        OrderGood orderGood2 = new OrderGood(1L, 2L, 5);
-        List<OrderGood> orderGoods = List.of(orderGood1, orderGood2);
-        Order expectedOrder = new Order(1L, 1L, OrderStatus.UNACCEPTED, now, orderGoods);
+        OrderProduct orderProduct1 = new OrderProduct(1L, 1L, 10);
+        OrderProduct orderProduct2 = new OrderProduct(1L, 2L, 5);
+        List<OrderProduct> orderProducts = List.of(orderProduct1, orderProduct2);
+        Order expectedOrder = new Order(1L, 1L, OrderStatus.UNACCEPTED, now, orderProducts);
 
 
         assertThat(actualOrder).isEqualTo(expectedOrder);

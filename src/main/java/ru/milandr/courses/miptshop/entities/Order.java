@@ -6,7 +6,6 @@ import ru.milandr.courses.miptshop.entities.enums.OrderStatus;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 
@@ -61,15 +60,15 @@ public class Order {
             cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     @Getter
     @Setter
-    private List<OrderGood> orderGoods;
+    private List<OrderProduct> orderProducts;
 
     public Order(Long id, Long userId, OrderStatus orderStatus,
                  LocalDateTime changeDateTime,
-                 List<OrderGood> orderGoods) {
+                 List<OrderProduct> orderProducts) {
         this.id = id;
         this.userId = userId;
         this.statusCode = orderStatus.getValue();
        // this.changeDateTime = changeDateTime;
-        this.orderGoods = orderGoods;
+        this.orderProducts = orderProducts;
     }
 }
