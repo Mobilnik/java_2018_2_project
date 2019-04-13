@@ -19,32 +19,32 @@ COMMENT ON SEQUENCE user_id_sequence IS 'Sequence for identifiers of table ''use
 
 
 
-CREATE TABLE IF NOT EXISTS good_categories (
+CREATE TABLE IF NOT EXISTS product_categories (
   id BIGINT PRIMARY KEY,
   name VARCHAR(100)
 );
-COMMENT ON TABLE good_categories IS 'Table containing the application good categories'' data';
-COMMENT ON COLUMN good_categories.id IS 'Categories''s identifier';
-COMMENT ON COLUMN good_categories.name IS 'Categories'' name';
+COMMENT ON TABLE product_categories IS 'Table containing the application product categories'' data';
+COMMENT ON COLUMN product_categories.id IS 'Categories''s identifier';
+COMMENT ON COLUMN product_categories.name IS 'Categories'' name';
 
 
 
-CREATE TABLE IF NOT EXISTS goods (
+CREATE TABLE IF NOT EXISTS products (
   id BIGINT PRIMARY KEY,
-  category_id BIGINT REFERENCES good_categories(id) ON DELETE CASCADE,
+  category_id BIGINT REFERENCES product_categories(id) ON DELETE CASCADE,
   name VARCHAR(100) NOT NULL,
   photo BYTEA,
   price NUMERIC
 );
-COMMENT ON TABLE goods IS 'Table containing the application goods'' data';
-COMMENT ON COLUMN goods.id IS 'Good''s identifier';
-COMMENT ON COLUMN goods.category_id IS 'Goods categories'' identifier';
-COMMENT ON COLUMN goods.name IS 'Good''s name';
-COMMENT ON COLUMN goods.photo IS 'Byte array with good''s photo';
-COMMENT ON COLUMN goods.price IS 'Good''s price';
+COMMENT ON TABLE products IS 'Table containing the application products'' data';
+COMMENT ON COLUMN products.id IS 'Product''s identifier';
+COMMENT ON COLUMN products.category_id IS 'Product''s categories'' identifier';
+COMMENT ON COLUMN products.name IS 'Product''s name';
+COMMENT ON COLUMN products.photo IS 'Byte array with product''s photo';
+COMMENT ON COLUMN products.price IS 'Product''s price';
 
-CREATE SEQUENCE IF NOT EXISTS  good_id_sequence START WITH 1 MINVALUE 1 INCREMENT BY 1;
-COMMENT ON SEQUENCE good_id_sequence IS 'Sequence for identifiers of table ''goods''';
+CREATE SEQUENCE IF NOT EXISTS  product_id_sequence START WITH 1 MINVALUE 1 INCREMENT BY 1;
+COMMENT ON SEQUENCE product_id_sequence IS 'Sequence for identifiers of table ''products''';
 
 
 
@@ -65,13 +65,13 @@ COMMENT ON SEQUENCE order_id_sequence IS 'Sequence for identifiers of table ''or
 
 
 
-CREATE TABLE IF NOT EXISTS orders_goods (
+CREATE TABLE IF NOT EXISTS orders_products (
   order_id BIGINT REFERENCES orders (id) ON DELETE CASCADE,
-  good_id BIGINT REFERENCES goods (id) ON DELETE CASCADE,
+  product_id BIGINT REFERENCES products (id) ON DELETE CASCADE,
   quantity INTEGER NOT NULL,
-  CONSTRAINT orders_goods_pk PRIMARY KEY (order_id, good_id)
+  CONSTRAINT orders_products_pk PRIMARY KEY (order_id, product_id)
 );
 
-COMMENT ON TABLE orders_goods IS 'Linkage table between tables ''orders'' and ''goods'' ';
-COMMENT ON COLUMN orders_goods.order_id IS 'Order''s identifier';
-COMMENT ON COLUMN orders_goods.good_id IS 'Good''s identifier';
+COMMENT ON TABLE orders_products IS 'Linkage table between tables ''orders'' and ''products'' ';
+COMMENT ON COLUMN orders_products.order_id IS 'Order''s identifier';
+COMMENT ON COLUMN orders_products.product_id IS 'Product''s identifier';
