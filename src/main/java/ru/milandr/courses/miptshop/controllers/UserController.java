@@ -6,7 +6,7 @@ import ru.milandr.courses.miptshop.dtos.UserDto;
 import ru.milandr.courses.miptshop.services.UserService;
 
 @RestController
-@RequestMapping("user")
+@RequestMapping("users")
 public class UserController {
 
     private UserService userService;

@@ -12,7 +12,7 @@ import ru.milandr.courses.miptshop.common.utils.ValidationException;
 import java.util.List;
 
 @RestController
-@RequestMapping("order")
+@RequestMapping("orders")
 public class OrderController {
     public static final Logger log = LoggerFactory.getLogger(OrderController.class);
 
