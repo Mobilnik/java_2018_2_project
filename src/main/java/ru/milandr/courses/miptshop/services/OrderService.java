@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.milandr.courses.miptshop.common.utils.ValidationException;
 import ru.milandr.courses.miptshop.daos.OrderDao;
 import ru.milandr.courses.miptshop.dtos.OrderDto;
-import ru.milandr.courses.miptshop.dtos.OrderGoodDto;
+import ru.milandr.courses.miptshop.dtos.OrderProductDto;
 import ru.milandr.courses.miptshop.entities.Order;
 import ru.milandr.courses.miptshop.entities.OrderGood;
 import ru.milandr.courses.miptshop.entities.enums.OrderStatus;
@@ -31,8 +31,8 @@ public class OrderService {
         validateIsNull(orderDto.getId(), "Can not create an object with existing id");
 
         validateIsNotNull(orderDto.getUserId(), "No user specified for the order");
-        if (orderDto.getOrderGoods() == null) {
-            orderDto.setOrderGoods(new ArrayList<>());
+        if (orderDto.getProducts() == null) {
+            orderDto.setProducts(new ArrayList<>());
         }
 
         //todo validate that current user is equal to the one mentioned in order when Security added + test it
@@ -77,14 +77,20 @@ public class OrderService {
     }
 
 
-    private List<OrderGoodDto> buildOrderGoodDtoListFromOrderGoodList(List<OrderGood> orderGoods) {
+    private List<OrderProductDto> buildOrderGoodDtoListFromOrderGoodList(List<OrderGood> orderGoods) {
         if (orderGoods == null) {
             return new ArrayList<>();
         }
 
-        return orderGoods.stream()
-                .map(orderGood -> new OrderGoodDto(orderGood.getGoodId(), orderGood.getQuantity()))
+        List<OrderProductDto> orderProductDtos =  orderGoods.stream()
+                .map(orderGood -> new OrderProductDto(
+                        orderGood.getGoodId(),
+                        orderGood.getGood().getName(),
+                        orderGood.getGood().getPrice(),
+                        orderGood.getQuantity()))
                 .collect(Collectors.toList());
+        log.info(orderProductDtos.toString());
+        return orderProductDtos;
     }
 
     private Order getOrderWithCartStatus() throws ValidationException {
@@ -118,16 +124,16 @@ public class OrderService {
 
 
     private List<OrderGood> buildOrderGoodListFromOrderDto(Order order, OrderDto orderDto) {
-        List<OrderGoodDto> orderGoodDtos = orderDto.getOrderGoods();
+        List<OrderProductDto> orderProductDtos = orderDto.getProducts();
 
-        if (orderGoodDtos == null) {
+        if (orderProductDtos == null) {
             return new ArrayList<>();
         }
 
-        return orderGoodDtos.stream()
-                .map(orderGoodDto -> new OrderGood(order.getId(),
-                        orderGoodDto.getGoodId(),
-                        orderGoodDto.getQuantity()))
+        return orderProductDtos.stream()
+                .map(orderProductDto -> new OrderGood(order.getId(),
+                        orderProductDto.getProductId(),
+                        orderProductDto.getQuantity()))
                 .collect(Collectors.toList());
     }
 

@@ -2,15 +2,9 @@ package ru.milandr.courses.miptshop.dtos;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.deser.std.DateDeserializers;
-import com.fasterxml.jackson.databind.ser.std.DateSerializer;
 import lombok.*;
 import ru.milandr.courses.miptshop.entities.enums.OrderStatus;
 
-import javax.xml.bind.annotation.XmlTransient;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -33,7 +27,7 @@ public class OrderDto {
 
     @Getter
     @Setter
-    private List<OrderGoodDto> orderGoods;
+    private List<OrderProductDto> products;
 
   /*  @JsonDeserialize(using = DateDeserializers.TimestampDeserializer.class)
    @JsonSerialize(using = DateSerializer.class)
@@ -43,21 +37,21 @@ public class OrderDto {
 
     public OrderDto(Long id, Long userId, OrderStatus orderStatus,
                    // LocalDateTime changeDateTime,
-                    List<OrderGoodDto> orderGoods) {
+                    List<OrderProductDto> products) {
         this.id = id;
         this.userId = userId;
         this.statusCode = orderStatus.getValue();
        // this.changeDateTime = changeDateTime;
-        this.orderGoods = orderGoods;
+        this.products = products;
     }
 
     public OrderDto(Long userId, OrderStatus orderStatus,
                    // LocalDateTime changeDateTime,
-                    List<OrderGoodDto> orderGoods) {
+                    List<OrderProductDto> products) {
         this.userId = userId;
         this.statusCode = orderStatus.getValue();
         //this.changeDateTime = changeDateTime;
-        this.orderGoods = orderGoods;
+        this.products = products;
     }
 
     @JsonIgnore

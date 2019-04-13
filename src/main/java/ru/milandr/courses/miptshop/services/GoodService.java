@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.milandr.courses.miptshop.common.utils.ValidationException;
 import ru.milandr.courses.miptshop.daos.GoodDao;
+import ru.milandr.courses.miptshop.daos.OrderDao;
 import ru.milandr.courses.miptshop.dtos.GoodDto;
 import ru.milandr.courses.miptshop.entities.Good;
 

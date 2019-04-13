@@ -10,12 +10,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ru.milandr.courses.miptshop.common.utils.ValidationException;
 import ru.milandr.courses.miptshop.daos.OrderDao;
 import ru.milandr.courses.miptshop.dtos.OrderDto;
-import ru.milandr.courses.miptshop.dtos.OrderGoodDto;
+import ru.milandr.courses.miptshop.dtos.OrderProductDto;
 import ru.milandr.courses.miptshop.entities.Order;
 import ru.milandr.courses.miptshop.entities.OrderGood;
 import ru.milandr.courses.miptshop.entities.enums.OrderStatus;
 import ru.milandr.courses.miptshop.services.OrderService;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -59,10 +60,10 @@ public class OrderServiceTest {
 
         OrderDto actualOrderDto = orderService.get(1L);
 
-        OrderGoodDto orderGoodDto1 = new OrderGoodDto(1L, 10);
-        OrderGoodDto orderGoodDto2 = new OrderGoodDto(2L, 5);
-        List<OrderGoodDto> orderGoodDtos = List.of(orderGoodDto1, orderGoodDto2);
-        OrderDto expectedOrderDto = new OrderDto(1L, 1L, OrderStatus.UNACCEPTED, /*now,*/ orderGoodDtos);
+        OrderProductDto orderProductDto1 = new OrderProductDto(1L, "Product1", new BigDecimal(10), 10);
+        OrderProductDto orderProductDto2 = new OrderProductDto(2L, "Product2", new BigDecimal(20), 5);
+        List<OrderProductDto> orderProductDtos = List.of(orderProductDto1, orderProductDto2);
+        OrderDto expectedOrderDto = new OrderDto(1L, 1L, OrderStatus.UNACCEPTED, /*now,*/ orderProductDtos);
 
         assertThat(actualOrderDto).isEqualTo(expectedOrderDto);
     }
@@ -95,15 +96,15 @@ public class OrderServiceTest {
 
         List<OrderDto> actualOrderDtoList = orderService.getListByUserId(1L);
 
-        OrderGoodDto orderGoodDto1 = new OrderGoodDto(1L, 10);
-        OrderGoodDto orderGoodDto2 = new OrderGoodDto(2L, 5);
-        List<OrderGoodDto> orderGoodDtos1 = List.of(orderGoodDto1, orderGoodDto2);
-        OrderDto expectedOrderDto1 = new OrderDto(1L, 1L, OrderStatus.UNACCEPTED,/* now,*/ orderGoodDtos1);
+        OrderProductDto orderProductDto1 = new OrderProductDto(1L, "Product1", new BigDecimal(10), 10);
+        OrderProductDto orderProductDto2 = new OrderProductDto(2L, "Product2", new BigDecimal(20), 5);
+        List<OrderProductDto> orderProductDtos1 = List.of(orderProductDto1, orderProductDto2);
+        OrderDto expectedOrderDto1 = new OrderDto(1L, 1L, OrderStatus.UNACCEPTED,/* now,*/ orderProductDtos1);
 
-        OrderGoodDto orderGoodDto3 = new OrderGoodDto(1L, 15);
-        OrderGoodDto orderGoodDto4 = new OrderGoodDto(2L, 20);
-        List<OrderGoodDto> orderGoodDtos2 = List.of(orderGoodDto3, orderGoodDto4);
-        OrderDto expectedOrderDto2 = new OrderDto(1L, 1L, OrderStatus.UNACCEPTED, /*now, */orderGoodDtos2);
+        OrderProductDto orderProductDto3 = new OrderProductDto(1L, "Product1", new BigDecimal(10), 15);
+        OrderProductDto orderProductDto4 = new OrderProductDto(2L, "Product2", new BigDecimal(20), 20);
+        List<OrderProductDto> orderProductDtos2 = List.of(orderProductDto3, orderProductDto4);
+        OrderDto expectedOrderDto2 = new OrderDto(1L, 1L, OrderStatus.UNACCEPTED, /*now, */orderProductDtos2);
 
         List<OrderDto> expectedOrderDtoList = List.of(expectedOrderDto1, expectedOrderDto2);
 
@@ -128,10 +129,10 @@ public class OrderServiceTest {
     @Test
     public void createTest() throws ValidationException {
         LocalDateTime now = LocalDateTime.now();
-        OrderGoodDto orderGoodDto1 = new OrderGoodDto(1L, 10);
-        OrderGoodDto orderGoodDto2 = new OrderGoodDto(2L, 5);
-        List<OrderGoodDto> orderGoodDtos = List.of(orderGoodDto1, orderGoodDto2);
-        OrderDto orderDto = new OrderDto(1L, OrderStatus.UNACCEPTED,/* now,*/ orderGoodDtos);
+        OrderProductDto orderProductDto1 = new OrderProductDto(1L, "Product1", new BigDecimal(10), 10);
+        OrderProductDto orderProductDto2 = new OrderProductDto(2L, "Product2", new BigDecimal(20), 5);
+        List<OrderProductDto> orderProductDtos = List.of(orderProductDto1, orderProductDto2);
+        OrderDto orderDto = new OrderDto(1L, OrderStatus.UNACCEPTED,/* now,*/ orderProductDtos);
         Order actualOrder = orderService.create(orderDto);
         //todo это хак, подумать, как лучше
         actualOrder.setId(1L);
