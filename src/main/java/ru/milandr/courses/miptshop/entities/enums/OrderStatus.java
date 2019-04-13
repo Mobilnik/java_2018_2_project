@@ -9,9 +9,10 @@ import ru.milandr.courses.miptshop.common.utils.OrderStatusException;
  */
 public enum OrderStatus {
     CANCELED((short) -1),
-    UNACCEPTED((short) 0),
-    ACCEPTED((short) 1),
-    READY((short) 2);
+    CART((short) 0),
+    UNACCEPTED((short) 1),
+    ACCEPTED((short) 2),
+    READY((short) 3);
 
     private short value;
 

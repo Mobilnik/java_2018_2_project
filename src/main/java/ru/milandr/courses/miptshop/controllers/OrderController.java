@@ -37,6 +37,11 @@ public class OrderController {
         orderService.create(orderDto);
     }
 
+    @GetMapping(value = "cart", produces = MediaType.APPLICATION_JSON_VALUE)
+    public OrderDto getCart() throws ValidationException {
+        return orderService.getCart();
+    }
+
     @GetMapping
     public List<ResponseEntity<OrderDto>> getByUserIdAndStatus(
             @RequestParam(value = "userId", required = false) Long userId,

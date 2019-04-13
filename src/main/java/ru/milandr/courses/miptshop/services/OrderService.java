@@ -10,6 +10,7 @@ import ru.milandr.courses.miptshop.dtos.OrderDto;
 import ru.milandr.courses.miptshop.dtos.OrderGoodDto;
 import ru.milandr.courses.miptshop.entities.Order;
 import ru.milandr.courses.miptshop.entities.OrderGood;
+import ru.milandr.courses.miptshop.entities.enums.OrderStatus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,26 @@ public class OrderService {
     private static final Logger log = LoggerFactory.getLogger(OrderService.class);
 
     private final OrderDao orderDao;
+
+    public Order create(OrderDto orderDto) throws ValidationException {
+        validateIsNotNull(orderDto, "No Order DTO provided");
+        validateIsNull(orderDto.getId(), "Can not create an object with existing id");
+
+        validateIsNotNull(orderDto.getUserId(), "No user specified for the order");
+        if (orderDto.getOrderGoods() == null) {
+            orderDto.setOrderGoods(new ArrayList<>());
+        }
+
+        //todo validate that current user is equal to the one mentioned in order when Security added + test it
+
+        Order order = buildOrderFromOrderDto(orderDto);
+        orderDao.save(order);
+
+        order.setOrderGoods(buildOrderGoodListFromOrderDto(order, orderDto));
+
+        orderDao.save(order);
+        return order;
+    }
 
     public OrderDto get(Long orderId) throws ValidationException {
         validateIsNotNull(orderId, "No order id provided");
@@ -40,6 +61,13 @@ public class OrderService {
         return buildOrderDtoFromOrder(order);
     }
 
+
+    public OrderDto getCart() throws ValidationException {
+        Order cartOrder = getOrderWithCartStatus();
+        return buildOrderDtoFromOrder(cartOrder);
+    }
+
+
     private OrderDto buildOrderDtoFromOrder(Order order) {
         return new OrderDto(order.getId(),
                 order.getUserId(),
@@ -48,48 +76,61 @@ public class OrderService {
                 buildOrderGoodDtoListFromOrderGoodList(order.getOrderGoods()));
     }
 
+
     private List<OrderGoodDto> buildOrderGoodDtoListFromOrderGoodList(List<OrderGood> orderGoods) {
+        if (orderGoods == null) {
+            return new ArrayList<>();
+        }
+
         return orderGoods.stream()
                 .map(orderGood -> new OrderGoodDto(orderGood.getGoodId(), orderGood.getQuantity()))
                 .collect(Collectors.toList());
     }
 
-    public Order create(OrderDto orderDto) throws ValidationException {
-        validateIsNotNull(orderDto, "No Order DTO provided");
-        validateIsNull(orderDto.getId(), "Can not create an object with existing id");
+    private Order getOrderWithCartStatus() throws ValidationException {
+        //todo get current user from context
+        Long userId = 1L;
 
-        validateIsNotNull(orderDto.getUserId(), "No user specified for the order");
-        if (orderDto.getOrderGoods() == null) {
-            orderDto.setOrderGoods(new ArrayList<>());
+        List<Order> orders = orderDao.findByUserIdAndStatusCode(userId, OrderStatus.CART.getValue());
+        if (orders.size() > 1) {
+            throw new ValidationException("There is more than more than 1 order with status \"Cart\" ");
+        } else if (orders.size() == 1) {
+            return orders.get(0);
+
         }
-        //todo validate that current user is equal to the one mentioned in order when Security added + test it
 
-        Order order = buildOrderFromOrderDto(orderDto);
-        orderDao.save(order);
+        //Если не нашли заказа со статусом статусом, возвращаем пустой.
+        Order order = new Order();
+        order.setId(userId);
 
-        order.setOrderGoods(buildOrderGoodListFromOrderDto(order, orderDto));
-
-        orderDao.save(order);
         return order;
     }
+
 
     private Order buildOrderFromOrderDto(OrderDto orderDto) {
         Order order = new Order();
         order.setStatus(orderDto.getStatus());
         order.setUserId(orderDto.getUserId());
-       // order.setChangeDateTime(orderDto.getChangeDateTime());
+        // order.setChangeDateTime(orderDto.getChangeDateTime());
 
         return order;
     }
 
+
     private List<OrderGood> buildOrderGoodListFromOrderDto(Order order, OrderDto orderDto) {
         List<OrderGoodDto> orderGoodDtos = orderDto.getOrderGoods();
+
+        if (orderGoodDtos == null) {
+            return new ArrayList<>();
+        }
+
         return orderGoodDtos.stream()
                 .map(orderGoodDto -> new OrderGood(order.getId(),
                         orderGoodDto.getGoodId(),
                         orderGoodDto.getQuantity()))
                 .collect(Collectors.toList());
     }
+
 
     public List<OrderDto> getListByUserId(Long userId) throws ValidationException {
         validateIsNotNull(userId, "No user id provided");

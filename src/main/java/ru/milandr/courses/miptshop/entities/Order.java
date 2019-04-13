@@ -44,10 +44,10 @@ public class Order {
     @Column(name = "STATUS_CODE")
     private short statusCode;
 
-    @Column(name = "CHANGE_DATE_TIME")
-    @Getter
-    @Setter
-    private LocalDateTime changeDateTime;
+   // @Column(name = "CHANGE_DATE_TIME")
+   // @Getter
+  //  @Setter
+   // private LocalDateTime changeDateTime;
 
     public OrderStatus getStatus() {
         return OrderStatus.parse(this.statusCode);
@@ -69,7 +69,7 @@ public class Order {
         this.id = id;
         this.userId = userId;
         this.statusCode = orderStatus.getValue();
-        this.changeDateTime = changeDateTime;
+       // this.changeDateTime = changeDateTime;
         this.orderGoods = orderGoods;
     }
 }
