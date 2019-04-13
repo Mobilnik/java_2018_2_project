@@ -1,4 +1,4 @@
---fixme do not execute each time?
+/*--fixme do not execute each time?
 INSERT INTO product_categories(id, name) VALUES (1, 'Food');
 INSERT INTO product_categories(id, name) VALUES (2, 'Clothes');
 INSERT INTO product_categories(id, name) VALUES (3, 'Books');
@@ -20,4 +20,4 @@ INSERT INTO products(id, category_id, name, photo, price) VALUES (10, 6, 'Ovchin
 INSERT INTO products(id, category_id, name, photo, price) VALUES (11, 6, 'Ovchinkin stand-ups: thermodynamics', null, 450.0);
 INSERT INTO products(id, category_id, name, photo, price) VALUES (12, 6, 'Ovchinkin stand-ups: electricity', null, 450.0);
 INSERT INTO products(id, category_id, name, photo, price) VALUES (13, 6, 'Ovchinkin stand-ups: optics', null, 450.0);
-INSERT INTO products(id, category_id, name, photo, price) VALUES (14, 6, 'Ovchinkin stand-ups: quantum physics', null, 450.0);
+INSERT INTO products(id, category_id, name, photo, price) VALUES (14, 6, 'Ovchinkin stand-ups: quantum physics', null, 450.0);*/
