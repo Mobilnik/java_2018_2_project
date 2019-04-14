@@ -39,7 +39,7 @@ public class OrderController {
 
     @GetMapping(value = "cart", produces = MediaType.APPLICATION_JSON_VALUE)
     public OrderDto getCart() throws ValidationException {
-        return orderService.getCart();
+        return orderService.getUserCart();
     }
 
     @GetMapping

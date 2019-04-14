@@ -1,3 +1,4 @@
+/*
 package ru.milandr.courses.miptshop.service;
 
 import org.junit.Before;
@@ -63,12 +64,13 @@ public class OrderServiceTest {
         OrderProductDto orderProductDto1 = new OrderProductDto(1L, "Product1", new BigDecimal(10), 10);
         OrderProductDto orderProductDto2 = new OrderProductDto(2L, "Product2", new BigDecimal(20), 5);
         List<OrderProductDto> orderProductDtos = List.of(orderProductDto1, orderProductDto2);
-        OrderDto expectedOrderDto = new OrderDto(1L, OrderStatus.UNACCEPTED, /*now,*/ orderProductDtos, "comment");
+        OrderDto expectedOrderDto = new OrderDto(1L, OrderStatus.UNACCEPTED, now, orderProductDtos, "comment");
 
         assertThat(actualOrderDto).isEqualTo(expectedOrderDto);
     }
 
-    /* @Test(expected = ValidationException.class)
+    */
+/* @Test(expected = ValidationException.class)
      public void nullGetByUserIdTest() throws ValidationException {
          orderService.getListByUserId(null);
      }
@@ -99,18 +101,27 @@ public class OrderServiceTest {
          OrderProductDto orderProductDto1 = new OrderProductDto(1L, "Product1", new BigDecimal(10), 10);
          OrderProductDto orderProductDto2 = new OrderProductDto(2L, "Product2", new BigDecimal(20), 5);
          List<OrderProductDto> orderProductDtos1 = List.of(orderProductDto1, orderProductDto2);
-         OrderDto expectedOrderDto1 = new OrderDto(1L, 1L, OrderStatus.UNACCEPTED,*//* now,*//* orderProductDtos1);
+         OrderDto expectedOrderDto1 = new OrderDto(1L, 1L, OrderStatus.UNACCEPTED,*//*
+*/
+/* now,*//*
+*/
+/* orderProductDtos1);
 
         OrderProductDto orderProductDto3 = new OrderProductDto(1L, "Product1", new BigDecimal(10), 15);
         OrderProductDto orderProductDto4 = new OrderProductDto(2L, "Product2", new BigDecimal(20), 20);
         List<OrderProductDto> orderProductDtos2 = List.of(orderProductDto3, orderProductDto4);
-        OrderDto expectedOrderDto2 = new OrderDto(1L, 1L, OrderStatus.UNACCEPTED, *//*now, *//*orderProductDtos2);
+        OrderDto expectedOrderDto2 = new OrderDto(1L, 1L, OrderStatus.UNACCEPTED, *//*
+*/
+/*now, *//*
+*/
+/*orderProductDtos2);
 
         List<OrderDto> expectedOrderDtoList = List.of(expectedOrderDto1, expectedOrderDto2);
 
         assertThat(actualOrderDtoList).isEqualTo(expectedOrderDtoList);
     }
-*/
+*//*
+
     @Test(expected = ValidationException.class)
     public void nullCreateTest() throws ValidationException {
         orderService.create(null);
@@ -118,12 +129,16 @@ public class OrderServiceTest {
 
     @Test(expected = ValidationException.class)
     public void existingIdCreateTest() throws ValidationException {
-        orderService.create(new OrderDto(1L, OrderStatus.UNACCEPTED, /*null, */null, "comment"));
+        orderService.create(new OrderDto(1L, OrderStatus.UNACCEPTED, */
+/*null, *//*
+null, "comment"));
     }
 
     @Test(expected = ValidationException.class)
     public void noUserIdCreateTest() throws ValidationException {
-        orderService.create(new OrderDto(null, OrderStatus.UNACCEPTED, /*null, */null, "comment"));
+        orderService.create(new OrderDto(null, OrderStatus.UNACCEPTED, */
+/*null, *//*
+null, "comment"));
     }
 
     @Test
@@ -132,7 +147,9 @@ public class OrderServiceTest {
         OrderProductDto orderProductDto1 = new OrderProductDto(1L, "Product1", new BigDecimal(10), 10);
         OrderProductDto orderProductDto2 = new OrderProductDto(2L, "Product2", new BigDecimal(20), 5);
         List<OrderProductDto> orderProductDtos = List.of(orderProductDto1, orderProductDto2);
-        OrderDto orderDto = new OrderDto(1L, OrderStatus.UNACCEPTED,/* now,*/ orderProductDtos, "comment");
+        OrderDto orderDto = new OrderDto(1L, OrderStatus.UNACCEPTED,*/
+/* now,*//*
+ orderProductDtos, "comment");
         Order actualOrder = orderService.create(orderDto);
         //todo это хак, подумать, как лучше
         actualOrder.setId(1L);
@@ -147,4 +164,4 @@ public class OrderServiceTest {
         assertThat(actualOrder).isEqualTo(expectedOrder);
     }
     //todo дописать для удаления и обновления
-}
+}*/

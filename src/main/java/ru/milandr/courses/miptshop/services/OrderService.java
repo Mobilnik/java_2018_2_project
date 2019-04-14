@@ -52,7 +52,7 @@ public class OrderService {
         Order order = orderDao.findOne(orderId);
         validateIsNotNull(order, "No order with id " + orderId);
 
-        //todo проверить, что не пытаются посмотреть не свой заказ
+        //todo validate that current user is equal to the one mentioned in order when Security added + test it
 
         if (order.getOrderProducts() == null) {
             order.setOrderProducts(new ArrayList<>());
@@ -61,8 +61,21 @@ public class OrderService {
         return buildOrderDto(order);
     }
 
+    public List<OrderDto> getUserOrders() throws ValidationException {
+        //todo validate that current user is equal to the one mentioned in order when Security added + test it
+        Long userId = 1L;
+        validateIsNotNull(userId, "No user id provided");
 
-    public OrderDto getCart() throws ValidationException {
+        List<Order> orders = orderDao.findAllByUserIdAndStatusCodeNot(userId, OrderStatus.CART.getValue());
+
+        validateIsNotNull(orders, "No orders for user " + userId);
+
+        return orders.stream()
+                .map(this::buildOrderDto)
+                .collect(Collectors.toList());
+    }
+
+    public OrderDto getUserCart() throws ValidationException {
         Order cartOrder = getOrderWithCartStatus();
         return buildOrderDto(cartOrder);
     }
@@ -71,7 +84,7 @@ public class OrderService {
     private OrderDto buildOrderDto(Order order) {
         return new OrderDto(order.getId(),
                 order.getStatus(),
-                //order.getChangeDateTime(),
+                order.getUpdatedDateTime(),
                 buildOrderProductDtos(order.getOrderProducts()),
                 order.getComment());
     }
@@ -139,21 +152,6 @@ public class OrderService {
                 .map(orderProductDto -> new OrderProduct(order.getId(),
                         orderProductDto.getProductId(),
                         orderProductDto.getQuantity()))
-                .collect(Collectors.toList());
-    }
-
-
-    public List<OrderDto> getUserOrders() throws ValidationException {
-        //todo validate that current user is equal to the one mentioned in order when Security added + test it
-        Long userId = 1L;
-        validateIsNotNull(userId, "No user id provided");
-
-        List<Order> orders = orderDao.findAllByUserIdAndStatusCodeNot(userId, OrderStatus.CART.getValue());
-
-        validateIsNotNull(orders, "No orders for user " + userId);
-
-        return orders.stream()
-                .map(this::buildOrderDto)
                 .collect(Collectors.toList());
     }
 }

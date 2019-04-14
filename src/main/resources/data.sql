@@ -1,4 +1,11 @@
-/*--fixme do not execute each time?
+--fixme do not execute each time?
+
+DELETE FROM orders_products;
+DELETE FROM products;
+DELETE FROM product_categories;
+DELETE FROM users;
+DELETE FROM orders;
+
 INSERT INTO product_categories(id, name) VALUES (1, 'Food');
 INSERT INTO product_categories(id, name) VALUES (2, 'Clothes');
 INSERT INTO product_categories(id, name) VALUES (3, 'Books');
@@ -25,14 +32,14 @@ INSERT INTO products(id, category_id, name, photo, price) VALUES (14, 6, 'Ovchin
 INSERT INTO users(id, email, name, photo, password_hash, password_salt)
 VALUES (1, 'iaulitin@yandex.ru', 'iaulitin', null, null, null);
 
-INSERT INTO orders(id, user_id, status_code, change_date_time, comment)
+INSERT INTO orders(id, user_id, status_code, updated_date_time, comment)
 VALUES (1, 1, 0, '2019-04-13 16:50:03.268000', 'It would be nice to receive my order ASAP.');
 INSERT INTO orders_products(order_id, product_id, quantity) VALUES (1, 1, 10);
 INSERT INTO orders_products(order_id, product_id, quantity) VALUES (1, 2, 20);
 INSERT INTO orders_products(order_id, product_id, quantity) VALUES (1, 7, 15);
 
-INSERT INTO orders(id, user_id, status_code, change_date_time, comment)
+INSERT INTO orders(id, user_id, status_code, updated_date_time, comment)
 VALUES (2, 1, 1, '2019-03-14 10:00:46.668000', 'Hope you have nice service!!!1');
 INSERT INTO orders_products(order_id, product_id, quantity) VALUES (2, 4, 9);
 INSERT INTO orders_products(order_id, product_id, quantity) VALUES (2, 3, 7);
-INSERT INTO orders_products(order_id, product_id, quantity) VALUES (2, 6, 9)*/
+INSERT INTO orders_products(order_id, product_id, quantity) VALUES (2, 6, 9)
