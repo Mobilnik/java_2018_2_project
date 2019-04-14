@@ -14,7 +14,11 @@ INSERT INTO product_categories(id, name) VALUES (5, 'Music');
 INSERT INTO product_categories(id, name) VALUES (6, 'Films');
 INSERT INTO product_categories(id, name) VALUES (7, 'Other');
 
-INSERT INTO products(id, category_id, name, photo, price) VALUES (1, 1, 'Bread', null, 25.7);
+--Разрешены только относительные пути для файлов при такой загрузке
+--Директория, относительно которой нужно прописать путь: SHOW data_directory;
+--У меня это /usr/local/var/postgres
+INSERT INTO products(id, category_id, name, photo, price)
+VALUES (1, 1, 'Bread', pg_read_binary_file('data/images/bread.jpg'), 25.7);
 INSERT INTO products(id, category_id, name, photo, price) VALUES (2, 1, 'Milk', null, 43.4);
 INSERT INTO products(id, category_id, name, photo, price) VALUES (3, 2, 'MIPT T-Shirt', null, 650.0);
 INSERT INTO products(id, category_id, name, photo, price) VALUES (4, 3, 'Physics by Sivukhin', null, 850.0);

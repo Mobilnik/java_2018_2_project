@@ -11,7 +11,7 @@ import java.util.List;
 @Table(name = "PRODUCTS")
 @NoArgsConstructor
 @EqualsAndHashCode
-@ToString(exclude = "orderProducts")
+@ToString(exclude = {"orderProducts", "category"})
 public class Product {
 
     @Id
@@ -49,7 +49,7 @@ public class Product {
     @Setter
     private List<OrderProduct> orderProducts;
 
-    @ManyToOne(fetch =  FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CATEGORY_ID", insertable = false, updatable = false)
     @Getter
     @Setter
