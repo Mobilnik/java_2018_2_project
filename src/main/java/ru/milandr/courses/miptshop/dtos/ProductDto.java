@@ -17,6 +17,14 @@ public class ProductDto {
 
     @Getter
     @Setter
+    private Long categoryId;
+
+    @Getter
+    @Setter
+    private String categoryName;
+
+    @Getter
+    @Setter
     private String name;
 
     @Getter
@@ -27,8 +35,15 @@ public class ProductDto {
     @Setter
     private BigDecimal price;
 
-    public ProductDto(Long id, String name, byte[] photo, BigDecimal price) {
+    public ProductDto(Long id,
+                      Long categoryId,
+                      String categoryName,
+                      String name,
+                      byte[] photo,
+                      BigDecimal price) {
         this.id = id;
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
         this.name = name;
         this.photo = photo;
         this.price = price;

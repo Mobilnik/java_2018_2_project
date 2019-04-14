@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.milandr.courses.miptshop.common.utils.ValidationException;
+import ru.milandr.courses.miptshop.daos.ProductCategoryDao;
 import ru.milandr.courses.miptshop.daos.ProductDao;
 import ru.milandr.courses.miptshop.dtos.ProductDto;
 import ru.milandr.courses.miptshop.entities.Product;
@@ -20,6 +21,7 @@ import static ru.milandr.courses.miptshop.common.utils.ValidationUtils.validateI
 public class ProductService {
 
     private final ProductDao productDao;
+    private final ProductCategoryDao productCategoryDao;
 
     public ProductDto get(Long productId) throws ValidationException {
         validateIsNotNull(productId, "No Product id provided");
@@ -31,13 +33,15 @@ public class ProductService {
 
     public List<ProductDto> getAll() {
         return productDao.findAllBy().stream()
-                 .map(this::buildProductDto)
-                 .collect(Collectors.toList());
+                .map(this::buildProductDto)
+                .collect(Collectors.toList());
     }
 
     private ProductDto buildProductDto(Product product) {
         ProductDto productDto = new ProductDto();
         productDto.setId(product.getId());
+        productDto.setCategoryId(product.getCategoryId());
+        productDto.setCategoryName(productCategoryDao.findOne(product.getCategoryId()).getName());
         productDto.setName(product.getName());
         productDto.setPhoto(product.getPhoto());
         productDto.setPrice(product.getPrice());
