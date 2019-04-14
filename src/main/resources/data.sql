@@ -57,15 +57,3 @@ VALUES (14, 6, 'Ovchinkin stand-ups: quantum physics', null, 450.0);
 
 INSERT INTO users(id, email, name, photo, password_hash, password_salt)
 VALUES (1, 'iaulitin@yandex.ru', 'iaulitin', null, null, null);
-
-INSERT INTO orders(id, user_id, status_code, updated_date_time, comment)
-VALUES (1, 1, 0, '2019-04-13 16:50:03.268000', 'It would be nice to receive my order ASAP.');
-INSERT INTO orders_products(order_id, product_id, quantity) VALUES (1, 1, 10);
-INSERT INTO orders_products(order_id, product_id, quantity) VALUES (1, 2, 20);
-INSERT INTO orders_products(order_id, product_id, quantity) VALUES (1, 7, 15);
-
-INSERT INTO orders(id, user_id, status_code, updated_date_time, comment)
-VALUES (2, 1, 1, '2019-03-14 10:00:46.668000', 'Hope you have nice service!!!1');
-INSERT INTO orders_products(order_id, product_id, quantity) VALUES (2, 4, 9);
-INSERT INTO orders_products(order_id, product_id, quantity) VALUES (2, 3, 7);
-INSERT INTO orders_products(order_id, product_id, quantity) VALUES (2, 6, 9)
