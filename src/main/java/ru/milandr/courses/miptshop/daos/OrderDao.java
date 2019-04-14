@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface OrderDao extends CrudRepository<Order, Long> {
 
-    List<Order> findAllByUserId(Long userId);
+    List<Order> findAllByUserIdAndStatusCodeNot(Long userId, Short status);
 
     List<Order> findByUserIdAndStatusCode(Long userId, Short statusCode);
 }

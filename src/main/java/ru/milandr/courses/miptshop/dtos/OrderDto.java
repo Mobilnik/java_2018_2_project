@@ -19,15 +19,15 @@ public class OrderDto {
 
     @Getter
     @Setter
-    private Long userId;
-
-    @Getter
-    @Setter
     private Short statusCode;
 
     @Getter
     @Setter
     private List<OrderProductDto> products;
+
+    @Getter
+    @Setter
+    private String comment;
 
   /*  @JsonDeserialize(using = DateDeserializers.TimestampDeserializer.class)
    @JsonSerialize(using = DateSerializer.class)
@@ -35,23 +35,16 @@ public class OrderDto {
     @Setter
     private LocalDateTime changeDateTime;*/
 
-    public OrderDto(Long id, Long userId, OrderStatus orderStatus,
-                   // LocalDateTime changeDateTime,
-                    List<OrderProductDto> products) {
+    public OrderDto(Long id,
+                    OrderStatus orderStatus,
+                    // LocalDateTime changeDateTime,
+                    List<OrderProductDto> products,
+                    String comment) {
         this.id = id;
-        this.userId = userId;
         this.statusCode = orderStatus.getValue();
-       // this.changeDateTime = changeDateTime;
+        // this.changeDateTime = changeDateTime;
         this.products = products;
-    }
-
-    public OrderDto(Long userId, OrderStatus orderStatus,
-                   // LocalDateTime changeDateTime,
-                    List<OrderProductDto> products) {
-        this.userId = userId;
-        this.statusCode = orderStatus.getValue();
-        //this.changeDateTime = changeDateTime;
-        this.products = products;
+        this.comment = comment;
     }
 
     @JsonIgnore

@@ -27,9 +27,9 @@ public class OrderController {
         return ResponseEntity.ok(orderService.get(orderId));
     }
 
-    @GetMapping("user/{userId}")
-    public ResponseEntity<List<OrderDto>> getOrderListByUserId(@PathVariable Long userId) throws ValidationException {
-        return ResponseEntity.ok(orderService.getListByUserId(userId));
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<OrderDto>> getOrders() throws ValidationException {
+        return ResponseEntity.ok(orderService.getUserOrders());
     }
 
     @PostMapping(value = "create", consumes = MediaType.APPLICATION_JSON_VALUE)

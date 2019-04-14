@@ -43,10 +43,15 @@ public class Order {
     @Column(name = "STATUS_CODE")
     private short statusCode;
 
-   // @Column(name = "CHANGE_DATE_TIME")
-   // @Getter
-  //  @Setter
-   // private LocalDateTime changeDateTime;
+    // @Column(name = "CHANGE_DATE_TIME")
+    // @Getter
+    //  @Setter
+    // private LocalDateTime changeDateTime;
+
+    @Column(name = "COMMENT")
+    @Getter
+    @Setter
+    private String comment;
 
     public OrderStatus getStatus() {
         return OrderStatus.parse(this.statusCode);
@@ -62,13 +67,17 @@ public class Order {
     @Setter
     private List<OrderProduct> orderProducts;
 
-    public Order(Long id, Long userId, OrderStatus orderStatus,
+    public Order(Long id,
+                 Long userId,
+                 OrderStatus orderStatus,
                  LocalDateTime changeDateTime,
-                 List<OrderProduct> orderProducts) {
+                 List<OrderProduct> orderProducts,
+                 String comment) {
         this.id = id;
         this.userId = userId;
         this.statusCode = orderStatus.getValue();
-       // this.changeDateTime = changeDateTime;
+        // this.changeDateTime = changeDateTime;
         this.orderProducts = orderProducts;
+        this.comment = comment;
     }
 }

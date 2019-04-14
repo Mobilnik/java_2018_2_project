@@ -30,12 +30,12 @@ public class OrderService {
         validateIsNotNull(orderDto, "No Order DTO provided");
         validateIsNull(orderDto.getId(), "Can not create an object with existing id");
 
-        validateIsNotNull(orderDto.getUserId(), "No user specified for the order");
+        //todo validate that current user is equal to the one mentioned in order when Security added + test it
+        Long userId = 1L;
+
         if (orderDto.getProducts() == null) {
             orderDto.setProducts(new ArrayList<>());
         }
-
-        //todo validate that current user is equal to the one mentioned in order when Security added + test it
 
         Order order = buildOrderFromOrderDto(orderDto);
         orderDao.save(order);
@@ -70,10 +70,10 @@ public class OrderService {
 
     private OrderDto buildOrderDto(Order order) {
         return new OrderDto(order.getId(),
-                order.getUserId(),
                 order.getStatus(),
                 //order.getChangeDateTime(),
-                buildOrderProductDtos(order.getOrderProducts()));
+                buildOrderProductDtos(order.getOrderProducts()),
+                order.getComment());
     }
 
 
@@ -82,7 +82,7 @@ public class OrderService {
             return new ArrayList<>();
         }
 
-        List<OrderProductDto> orderProductDtos =  orderProducts.stream()
+        List<OrderProductDto> orderProductDtos = orderProducts.stream()
                 .map(orderProduct -> new OrderProductDto(
                         orderProduct.getProductId(),
                         orderProduct.getProduct().getName(),
@@ -116,7 +116,12 @@ public class OrderService {
     private Order buildOrderFromOrderDto(OrderDto orderDto) {
         Order order = new Order();
         order.setStatus(orderDto.getStatus());
-        order.setUserId(orderDto.getUserId());
+        order.setComment(orderDto.getComment());
+
+        //todo validate that current user is equal to the one mentioned in order when Security added + test it
+        Long userId = 1L;
+
+        order.setUserId(userId);
         // order.setChangeDateTime(orderDto.getChangeDateTime());
 
         return order;
@@ -138,13 +143,14 @@ public class OrderService {
     }
 
 
-    public List<OrderDto> getListByUserId(Long userId) throws ValidationException {
+    public List<OrderDto> getUserOrders() throws ValidationException {
+        //todo validate that current user is equal to the one mentioned in order when Security added + test it
+        Long userId = 1L;
         validateIsNotNull(userId, "No user id provided");
 
-        List<Order> orders = orderDao.findAllByUserId(userId);
-        validateIsNotNull(orders, "No orders for user " + userId);
+        List<Order> orders = orderDao.findAllByUserIdAndStatusCodeNot(userId, OrderStatus.CART.getValue());
 
-        //todo validate that current user is equal to the one mentioned in order when Security added + test it
+        validateIsNotNull(orders, "No orders for user " + userId);
 
         return orders.stream()
                 .map(this::buildOrderDto)

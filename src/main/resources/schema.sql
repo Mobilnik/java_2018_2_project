@@ -52,13 +52,16 @@ CREATE TABLE IF NOT EXISTS orders (
   id BIGINT PRIMARY KEY,
   user_id BIGINT REFERENCES users (id) ON DELETE CASCADE,
   status_code SMALLINT,
-  change_date_time TIMESTAMP
+  change_date_time TIMESTAMP,
+  comment VARCHAR(500)
 );
 COMMENT ON TABLE orders IS 'Table containing the application orders'' data';
 COMMENT ON COLUMN orders.id IS 'Order''s identifier';
 COMMENT ON COLUMN orders.user_id IS 'Id of the user that made an order';
 COMMENT ON COLUMN orders.status_code IS 'Code of order''s status';
 COMMENT ON COLUMN orders.change_date_time IS 'Last change date and time';
+COMMENT ON COLUMN orders.comment IS 'Comment on order provided by a customer';
+
 
 CREATE SEQUENCE IF NOT EXISTS order_id_sequence START WITH 1 MINVALUE 1 INCREMENT BY 1;
 COMMENT ON SEQUENCE order_id_sequence IS 'Sequence for identifiers of table ''orders''';
