@@ -17,6 +17,8 @@ import ru.milandr.courses.miptshop.entities.OrderProductPK;
 import ru.milandr.courses.miptshop.entities.enums.OrderStatus;
 
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -175,7 +177,7 @@ public class OrderService {
         Order cartOrder = findUserCartOrder(userId);
 
         cartOrder.setStatus(OrderStatus.UNACCEPTED);
-        cartOrder.setUpdatedDateTime(LocalDateTime.now());
+        cartOrder.setUpdatedDateTime(ZonedDateTime.now(ZoneOffset.UTC));
         cartOrder.setComment(createOrderFromCartPostDto.getComment());
         orderDao.save(cartOrder);
     }
@@ -204,7 +206,7 @@ public class OrderService {
         Order order = new Order();
         order.setUserId(userId);
         order.setStatus(OrderStatus.CART);
-        order.setUpdatedDateTime(LocalDateTime.now());
+        order.setUpdatedDateTime(ZonedDateTime.now(ZoneOffset.UTC));
         order.setOrderProducts(new ArrayList<>());
 
         return orderDao.save(order);

@@ -7,9 +7,11 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.*;
 import ru.milandr.courses.miptshop.common.serialization.LocalDateTimeDeserializer;
+import ru.milandr.courses.miptshop.common.serialization.ZonedDateTimeDeserializer;
 import ru.milandr.courses.miptshop.entities.enums.OrderStatus;
 
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -35,14 +37,14 @@ public class OrderDto {
     private String comment;
 
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonDeserialize(using = ZonedDateTimeDeserializer.class)
     @Getter
     @Setter
-    private LocalDateTime updatedDateTime;
+    private ZonedDateTime updatedDateTime;
 
     public OrderDto(Long id,
                     OrderStatus orderStatus,
-                    LocalDateTime updatedDateTime,
+                    ZonedDateTime updatedDateTime,
                     List<OrderProductDto> products,
                     String comment) {
         this.id = id;

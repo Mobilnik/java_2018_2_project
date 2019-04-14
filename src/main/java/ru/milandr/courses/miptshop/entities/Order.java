@@ -5,7 +5,7 @@ import ru.milandr.courses.miptshop.entities.enums.OrderStatus;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 
@@ -46,7 +46,7 @@ public class Order {
     @Column(name = "UPDATED_DATE_TIME")
     @Getter
     @Setter
-    private LocalDateTime updatedDateTime;
+    private ZonedDateTime updatedDateTime;
 
     @Column(name = "COMMENT")
     @Getter
@@ -70,7 +70,7 @@ public class Order {
     public Order(Long id,
                  Long userId,
                  OrderStatus orderStatus,
-                 LocalDateTime updatedDateTime,
+                 ZonedDateTime updatedDateTime,
                  List<OrderProduct> orderProducts,
                  String comment) {
         this.id = id;
