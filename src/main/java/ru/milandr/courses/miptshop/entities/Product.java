@@ -34,10 +34,10 @@ public class Product {
     @Setter
     private String name;
 
-    @Column(name = "PHOTO")
+    @Column(name = "PHOTO_URL")
     @Getter
     @Setter
-    private byte[] photo;
+    private String photoUrl;
 
     @Column(name = "PRICE")
     @Getter
@@ -55,10 +55,10 @@ public class Product {
     @Setter
     private ProductCategory category;
 
-    public Product(Long id, String name, byte[] photo, BigDecimal price) {
+    public Product(Long id, String name, String photoUrl, BigDecimal price) {
         this.id = id;
         this.name = name;
-        this.photo = photo;
+        this.photoUrl = photoUrl;
         this.price = price;
     }
 }

@@ -43,7 +43,7 @@ public class ProductService {
         productDto.setCategoryId(product.getCategoryId());
         productDto.setCategoryName(productCategoryDao.findOne(product.getCategoryId()).getName());
         productDto.setName(product.getName());
-        productDto.setPhoto(product.getPhoto());
+        productDto.setPhotoUrl(product.getPhotoUrl());
         productDto.setPrice(product.getPrice());
 
         return productDto;
@@ -61,7 +61,7 @@ public class ProductService {
     private Product buildProduct(ProductDto productDto) {
         return new Product(null,
                 productDto.getName(),
-                productDto.getPhoto(),
+                productDto.getPhotoUrl(),
                 productDto.getPrice());
     }
 
@@ -73,7 +73,7 @@ public class ProductService {
         validateIsNotNull(product, "No Product with id " + productDto.getId());
 
         product.setName(productDto.getName());
-        product.setPhoto(productDto.getPhoto());
+        product.setPhotoUrl(productDto.getPhotoUrl());
         product.setPrice(productDto.getPrice());
 
         productDao.save(product);

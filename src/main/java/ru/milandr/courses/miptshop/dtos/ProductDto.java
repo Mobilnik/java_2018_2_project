@@ -29,7 +29,7 @@ public class ProductDto {
 
     @Getter
     @Setter
-    private byte[] photo;
+    private String photoUrl;
 
     @Getter
     @Setter
@@ -39,13 +39,13 @@ public class ProductDto {
                       Long categoryId,
                       String categoryName,
                       String name,
-                      byte[] photo,
+                      String photoUrl,
                       BigDecimal price) {
         this.id = id;
         this.categoryId = categoryId;
         this.categoryName = categoryName;
         this.name = name;
-        this.photo = photo;
+        this.photoUrl = photoUrl;
         this.price = price;
     }
 }

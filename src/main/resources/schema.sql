@@ -2,7 +2,6 @@ CREATE TABLE IF NOT EXISTS users (
   id BIGINT PRIMARY KEY,
   email VARCHAR(100) UNIQUE NOT NULL,
   name VARCHAR(100) UNIQUE NOT NULL,
-  photo BYTEA,
   password_hash VARCHAR(255),
   password_salt VARCHAR(32)
 );
@@ -10,7 +9,6 @@ COMMENT ON TABLE users IS 'Table containing the application users'' data';
 COMMENT ON COLUMN users.id IS 'User''s identifier';
 COMMENT ON COLUMN users.email IS 'User''s email';
 COMMENT ON COLUMN users.name IS 'User''s name';
-COMMENT ON COLUMN users.photo IS 'Byte array with user''s photo';
 COMMENT ON COLUMN users.password_hash IS 'User''s password hash';
 COMMENT ON COLUMN users.password_salt IS 'A salt to calculate a password hash';
 
@@ -33,14 +31,14 @@ CREATE TABLE IF NOT EXISTS products (
   id BIGINT PRIMARY KEY,
   category_id BIGINT REFERENCES product_categories(id) ON DELETE CASCADE,
   name VARCHAR(100) NOT NULL,
-  photo BYTEA,
+  photo_url VARCHAR,
   price NUMERIC
 );
 COMMENT ON TABLE products IS 'Table containing the application products'' data';
 COMMENT ON COLUMN products.id IS 'Product''s identifier';
 COMMENT ON COLUMN products.category_id IS 'Product''s categories'' identifier';
 COMMENT ON COLUMN products.name IS 'Product''s name';
-COMMENT ON COLUMN products.photo IS 'Byte array with product''s photo';
+COMMENT ON COLUMN products.photo_url IS 'Byte array with product''s photoUrl';
 COMMENT ON COLUMN products.price IS 'Product''s price';
 
 CREATE SEQUENCE IF NOT EXISTS  product_id_sequence START WITH 1 MINVALUE 1 INCREMENT BY 1;
