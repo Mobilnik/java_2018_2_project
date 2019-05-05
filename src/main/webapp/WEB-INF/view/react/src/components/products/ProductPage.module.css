@@ -1,0 +1,44 @@
+.productPageWrapper {
+    display: grid;
+
+    grid-template-areas: "search" "grid";
+    grid-template-rows: 30px 1fr; /* первая строка займет 30 пикселей, вторая - 1 некую единицу */
+    grid-gap: 0;
+
+    padding-left: 10px;
+
+    font-family: "Roboto";
+}
+
+.productPageSearch {
+    grid-area: search;
+
+    user-select: none;
+
+    border: none;
+    overflow: auto;
+    outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+
+    resize: none; /*remove the resize handle on the bottom right*/
+
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-bottom: 2px;
+
+    font-weight: lighter;
+    font-size: 18px;
+}
+
+.productPageGrid {
+    grid-area: grid;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 256px);
+    grid-template-rows: repeat(auto-fill, 350px);
+
+    grid-gap: 10px;
+}

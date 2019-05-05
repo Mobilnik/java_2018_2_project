@@ -1,0 +1,80 @@
+.cartPageWrapper {
+    display: grid;
+
+    grid-template-areas: "grid" "creator";
+    grid-template-columns: 4fr 1fr; /* первая строка займет 4 единицы, вторая - 1*/
+    grid-gap: 0;
+
+    padding-left: 10px;
+
+    font-family: "Roboto";
+}
+
+.emptyCartMessage {
+    padding: 1rem;
+
+    font-weight: bolder;
+    font-size: 16px;
+}
+
+.cartPageGrid {
+    grid-area: grid;
+
+    display: grid;
+}
+
+.cartPageInnerWrapper {
+    grid-area: creator;
+
+    padding-top: 1rem;
+    display: grid;
+    grid-template-areas: "totalCost totalCost" "comment saveButton";
+    grid-template-columns: 4fr 1fr;
+    grid-gap: 10px;
+}
+
+.cartPageInnerWrapper .totalCost {
+    grid-area: totalCost;
+
+    margin-left: 61%;
+
+    font-weight: bolder;
+    font-size: 16px;
+}
+
+.cartPageInnerWrapper .comment {
+    grid-area: comment;
+
+    user-select: none;
+
+    border: none;
+    overflow: auto;
+    outline: none;
+
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+
+    resize: none; /*remove the resize handle on the bottom right*/
+
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-bottom: 2px;
+
+    font-weight: lighter;
+    font-size: 18px;
+}
+
+.cartPageInnerWrapper .saveButton {
+    right: 0;
+    grid-area: saveButton;
+}
+
+.cartPageInnerWrapper .saveButton img {
+    width: 75%;
+    height: 85%;
+}
+
+.cartPageInnerWrapper .saveButton img:hover{
+    cursor: pointer;
+}

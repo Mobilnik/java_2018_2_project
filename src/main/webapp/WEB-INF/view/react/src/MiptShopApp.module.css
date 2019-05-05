@@ -1,0 +1,44 @@
+.appWrapper {
+    display: grid;
+
+    grid-template-areas: "header header" "sidebar content";
+    grid-template-rows: 60px 1fr;
+    grid-template-columns: 2fr 10fr;
+    grid-gap: 0;
+
+    font-family: "Roboto";
+
+    height: calc(100vh - 10px);
+}
+
+.appHeader {
+    grid-area: header;
+
+    border: 2px solid peachpuff;
+
+    background-color: blanchedalmond;
+
+    text-align: right;
+}
+
+
+.appSidebar {
+    grid-area: sidebar;
+
+    border-left: 2px solid peachpuff;
+    border-right: 1px solid peachpuff;
+    border-bottom: 1px solid peachpuff;
+
+    background-color: blanchedalmond;
+
+    padding-top: 10px;
+
+    text-align: center;
+
+    font-weight: lighter;
+    font-size: 14px;
+}
+
+.appContent {
+    grid-area: content;
+}

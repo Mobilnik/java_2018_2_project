@@ -28,12 +28,31 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
+        //for swagger
         registry.addResourceHandler("swagger-ui.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
 
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
 
+        //for static resources
+        registry.addResourceHandler("/static/**")
+                .addResourceLocations("/WEB-INF/view/react/build/static/");
+
+        registry.addResourceHandler("/*.js")
+                .addResourceLocations("/WEB-INF/view/react/build/");
+
+        registry.addResourceHandler("/*.json")
+                .addResourceLocations("/WEB-INF/view/react/build/");
+
+        registry.addResourceHandler("/*.ico")
+                .addResourceLocations("/WEB-INF/view/react/build/");
+
+        registry.addResourceHandler("/index.html")
+                .addResourceLocations("/WEB-INF/view/react/build/index.html");
+
+        registry.addResourceHandler("/login.html")
+                .addResourceLocations("/WEB-INF/view/react/build/login.html");
     }
 }
 

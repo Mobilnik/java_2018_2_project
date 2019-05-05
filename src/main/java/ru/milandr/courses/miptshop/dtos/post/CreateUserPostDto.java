@@ -1,17 +1,14 @@
-package ru.milandr.courses.miptshop.dtos;
+package ru.milandr.courses.miptshop.dtos.post;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class UserCreateDto {
-
-    @Getter
-    @Setter
-    private Long id;
+public class CreateUserPostDto {
 
     @Getter
     @Setter
@@ -23,13 +20,5 @@ public class UserCreateDto {
 
     @Getter
     @Setter
-    private byte[] photo;
-
-    @Getter
-    @Setter
-    private String passwordHash;
-
-    @Getter
-    @Setter
-    private String passwordSalt;
+    private String password;
 }

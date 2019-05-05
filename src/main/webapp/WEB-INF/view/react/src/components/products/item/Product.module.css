@@ -1,0 +1,62 @@
+.productItemWrapper {
+    display: grid;
+
+    grid-template-areas: "photo photo"
+    "description addButton";
+    grid-template-rows: 3fr 1fr;
+    grid-template-columns: 3fr 2fr;
+
+    border-bottom: 1px solid peachpuff;
+    border-right: 1px solid peachpuff;
+}
+
+
+.productItemPhoto {
+    grid-area: photo;
+}
+
+.productItemPhoto img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+
+.productItemDescription {
+    grid-area: description;
+
+    padding: 0.5rem;
+    padding-top: 1rem;
+
+    font-weight: bolder;
+    font-size: 14px;
+
+    border-top: 1px solid peachpuff;
+
+    /*Прячем длинные названия*/
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.productItemDescription .price {
+    padding-top: 0.5rem;
+    font-weight: lighter;
+}
+
+.productItemAddButton {
+    grid-area: addButton;
+    border-top: 1px solid peachpuff;
+}
+
+.productItemAddButton img {
+    padding-left: 0.7rem;
+    padding-top: 0.7rem;
+    width: 70%;
+    height: 70%;
+}
+
+.productItemAddButton img:hover{
+    cursor: pointer;
+}

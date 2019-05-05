@@ -1,0 +1,23 @@
+.orderPageWrapper {
+    display: grid;
+
+    grid-template-areas: "grid";
+    grid-template-columns: 4fr 1fr; /* первая строка займет 4 единицы, вторая - 1*/
+    grid-gap: 0;
+
+    padding-left: 10px;
+
+    font-family: "Roboto";
+}
+
+.noOrdersMessage {
+    padding: 1rem;
+
+    font-weight: bolder;
+    font-size: 16px;
+}
+
+.orderPageGrid {
+    grid-area: grid;
+    display: grid;
+}

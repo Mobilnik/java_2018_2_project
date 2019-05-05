@@ -1,0 +1,18 @@
+.menuItem {
+    display: inline-block;
+
+    margin-right: 2%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+
+    font-size: 20px;
+}
+
+.menuItem a {
+    color: darkgray;
+    text-decoration: none;
+}
+
+.menuItem a.activeLink {
+    color: black
+}

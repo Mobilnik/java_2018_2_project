@@ -1,5 +1,8 @@
 HELP.md
 /target/
+/src/main/webapp/WEB-INF/view/react/build/
+/src/main/webapp/WEB-INF/view/react/node/
+/src/main/webapp/WEB-INF/view/react/node_modules/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###

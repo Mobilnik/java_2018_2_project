@@ -1,11 +1,17 @@
 package ru.milandr.courses.miptshop.services;
 
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import ru.milandr.courses.miptshop.common.utils.PasswordUtils;
 import ru.milandr.courses.miptshop.common.utils.ValidationException;
+import ru.milandr.courses.miptshop.common.utils.ValidationUtils;
 import ru.milandr.courses.miptshop.daos.UserDao;
-import ru.milandr.courses.miptshop.dtos.UserCreateDto;
 import ru.milandr.courses.miptshop.dtos.UserDto;
+import ru.milandr.courses.miptshop.dtos.post.CreateUserPostDto;
 import ru.milandr.courses.miptshop.entities.User;
 
 import static ru.milandr.courses.miptshop.common.utils.ValidationUtils.validateIsNotNull;
@@ -13,6 +19,7 @@ import static ru.milandr.courses.miptshop.common.utils.ValidationUtils.validateI
 @Service
 @RequiredArgsConstructor
 public class UserService {
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
     private final UserDao userDao;
 
@@ -55,10 +62,56 @@ public class UserService {
                 user.getPhoto());
     }
 
-    public User create(UserCreateDto userCreateDto) {
-       // User user = buildUserFromUserCreateDto(userCreateDto);
-     //   user.setPasswordHash();
-        return null;
+    public User create(CreateUserPostDto createUserPostDto) throws ValidationException {
+        ValidationUtils.validateIsNotNull(createUserPostDto, "No user provided to proceed");
+
+        User user = buildUserFromCreateUserDto(createUserPostDto);
+        ValidationUtils.validateIsNotNull(user, "Can non handle request properly");
+
+        User dbUser = userDao.findByName(user.getName());
+        ValidationUtils.validateIsNull(dbUser, "User name is already in use");
+        dbUser = userDao.findByEmail(user.getEmail());
+        ValidationUtils.validateIsNull(dbUser, "User e-mail is already used");
+
+        return userDao.save(user);
     }
 
+    private User buildUserFromCreateUserDto(CreateUserPostDto createUserPostDto) {
+        User user = new User();
+        user.setEmail(createUserPostDto.getEmail());
+        user.setName(createUserPostDto.getName());
+
+        try {
+            String salt = PasswordUtils.getNewSalt();
+            String passwordHash = PasswordUtils.getPasswordHash(createUserPostDto.getPassword(), salt);
+
+            user.setPasswordSalt(salt);
+            user.setPasswordHash(passwordHash);
+            return user;
+        } catch (Exception e) {
+            log.error("An exception occurred during salt generation");
+            return null;
+        }
+    }
+
+    public User getCurrentAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null) {
+            return null;
+        }
+
+        String currentPrincipalName = authentication.getName();
+        if (currentPrincipalName == null) {
+            return null;
+        }
+
+        return userDao.findByName(currentPrincipalName);
+    }
+
+    public UserDto getCurrent() throws ValidationException {
+        User currentUser = getCurrentAuthenticatedUser();
+        ValidationUtils.validateIsNotNull(currentUser, "No current user");
+
+        return buildUserDtoFromUser(currentUser);
+    }
 }

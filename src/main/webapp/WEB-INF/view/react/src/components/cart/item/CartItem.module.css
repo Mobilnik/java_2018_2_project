@@ -1,0 +1,65 @@
+.cartItemWrapper {
+    display: grid;
+
+    grid-template-areas: "description quantity removeButton";
+
+    grid-template-columns: 3fr 1fr 1fr;
+}
+
+.cartItemDescription {
+    grid-area: description;
+
+    padding: 0.5rem;
+    padding-top: 1rem;
+
+    font-weight: bolder;
+    font-size: 16px;
+
+    border-bottom: 1px solid peachpuff;
+}
+
+.cartItemDescription .price {
+    padding-top: 0.5rem;
+    font-weight: lighter;
+}
+
+.cartItemQuantity {
+    grid-area: quantity;
+
+    padding: 0.5rem;
+    padding-top: 1rem;
+
+    border-bottom: 1px solid peachpuff;
+}
+
+.cartItemRemoveButton {
+    border-bottom: 1px solid peachpuff;
+}
+
+.cartItemRemoveButton img {
+    grid-area: removeButton;
+
+    padding-left: 1.1rem;
+    padding-top: 1.2rem;
+
+    width: 10%;
+    height: 20%;
+}
+
+.cartItemRemoveButton img:hover{
+    cursor: pointer;
+}
+
+/*Отключение стрелок на input type=number. Убрал у себя, оставил для демо.*/
+/*
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}*/
