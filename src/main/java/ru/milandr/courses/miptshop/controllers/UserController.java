@@ -6,12 +6,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.milandr.courses.miptshop.common.utils.ValidationException;
-import ru.milandr.courses.miptshop.common.utils.ValidationUtils;
 import ru.milandr.courses.miptshop.dtos.UserDto;
 import ru.milandr.courses.miptshop.dtos.post.CreateUserPostDto;
 import ru.milandr.courses.miptshop.services.UserService;
-
-import java.util.Map;
 
 @RequiredArgsConstructor
 @RestController
@@ -22,7 +19,7 @@ public class UserController {
     private final UserService userService;
 
     //form post conflicts with @RequestBody
-    @PostMapping(value = "create", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+/*    @PostMapping(value = "create", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public void create(@RequestParam Map<String, String> body) throws ValidationException {
         ValidationUtils.validateIsNotNull(body, "No params provided");
         String email = body.get("email");
@@ -34,6 +31,11 @@ public class UserController {
 
 
         userService.create(new CreateUserPostDto(email, name, password));
+    }*/
+
+    @PostMapping(value = "create", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public void create(@RequestBody CreateUserPostDto createUserPostDto) throws ValidationException {
+        userService.create(createUserPostDto);
     }
 
     @GetMapping("current")

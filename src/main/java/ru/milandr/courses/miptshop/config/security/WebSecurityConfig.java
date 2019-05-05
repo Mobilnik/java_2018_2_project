@@ -28,15 +28,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
         //https://ru.wikipedia.org/wiki/Межсайтовая_подделка_запроса
         http.cors();
+
         http.csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/users/create").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/users/create").permitAll()
                 .antMatchers(HttpMethod.GET, "/login*", "/static/**", "/*.js", "/*.json", "/*.ico").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login.html")
                 .loginProcessingUrl("/perform_login")
-                .defaultSuccessUrl("/index.html", true)
+                .defaultSuccessUrl("/index.html#/products", true)
                 .failureUrl("/login.html?error=true");
 
         http.logout()

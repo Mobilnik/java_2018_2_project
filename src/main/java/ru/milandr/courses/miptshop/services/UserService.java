@@ -71,7 +71,7 @@ public class UserService {
         User dbUser = userDao.findByName(user.getName());
         ValidationUtils.validateIsNull(dbUser, "User name is already in use");
         dbUser = userDao.findByEmail(user.getEmail());
-        ValidationUtils.validateIsNull(dbUser, "User e-mail is already used");
+        ValidationUtils.validateIsNull(dbUser, "User e-mail is already in use");
 
         return userDao.save(user);
     }

@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import {Router} from 'react-router';
 import {Provider} from "react-redux";
 import store from "./redux/redux-store.js";
 import MiptShopApp from "./MiptShopApp";

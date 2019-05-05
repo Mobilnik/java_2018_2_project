@@ -46,7 +46,7 @@
             <a href="#" id="cancel_reset"><i class="fas fa-angle-left"></i> Back</a>
         </form>-->
 
-    <form action="api/users/create" class="form-signup" method="post">
+    <form id="form-signup" class="form-signup" method="post">
         <!--        <div class="social-login">
                     <button class="btn facebook-btn social-btn" type="button">
                         <span><i class="fab fa-facebook-f"></i> Sign up with Facebook</span>
@@ -68,7 +68,9 @@
         <!--   <input type="password" id="user-repeatpass" class="form-control" placeholder="Repeat Password" required
                   autofocus="">-->
 
-        <button class="btn btn-primary btn-block" type="submit">
+        <button class="btn btn-primary btn-block"
+                type="button"
+                onclick="onSignUpFormSubmit(this.form)">
             <i class="fas fa-user-plus"></i> Sign Up
         </button>
         <a href="#" id="cancel_signup"><i class="fas fa-angle-left"></i> Back</a>
@@ -99,11 +101,10 @@ $(()=>{
 })g" target="_blank" style="color:black"/>
 </p>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"/>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 <script src="/static/js/login.js"></script>
 </body>
 </html>
-
-
