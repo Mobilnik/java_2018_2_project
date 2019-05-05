@@ -23,7 +23,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ru.milandr.courses.miptshop.common.utils.ValidationUtils.*;
+import static ru.milandr.courses.miptshop.common.utils.ValidationUtils.validateIsNotEmpty;
+import static ru.milandr.courses.miptshop.common.utils.ValidationUtils.validateIsNotNull;
 
 @Service
 @RequiredArgsConstructor
@@ -32,26 +33,7 @@ public class OrderService {
 
     private final OrderDao orderDao;
     private final OrderProductDao orderProductDao;
-
-    public Order create(OrderDto orderDto) throws ValidationException {
-        validateIsNotNull(orderDto, "No Order DTO provided");
-        validateIsNull(orderDto.getId(), "Can not create an object with existing id");
-
-        //todo validate that current user is equal to the one mentioned in order when Security added + test it
-        Long userId = 1L;
-
-        if (orderDto.getProducts() == null) {
-            orderDto.setProducts(new ArrayList<>());
-        }
-
-        Order order = buildOrderFromOrderDto(orderDto);
-        orderDao.save(order);
-
-        order.setOrderProducts(buildOrderProductsFromOrderDto(order, orderDto));
-
-        orderDao.save(order);
-        return order;
-    }
+    private final UserService userService;
 
     public OrderDto get(Long orderId) throws ValidationException {
         validateIsNotNull(orderId, "No order id provided");
@@ -59,7 +41,9 @@ public class OrderService {
         Order order = orderDao.findOne(orderId);
         validateIsNotNull(order, "No order with id " + orderId);
 
-        //todo validate that current user is equal to the one mentioned in order when Security added + test it
+        if (order.getUserId() == userService.getCurrentAuthenticatedUserIdSafely()) {
+            return null;
+        }
 
         if (order.getOrderProducts() == null) {
             order.setOrderProducts(new ArrayList<>());
@@ -69,8 +53,7 @@ public class OrderService {
     }
 
     public List<OrderDto> getUserOrders() throws ValidationException {
-        //todo validate that current user is equal to the one mentioned in order when Security added + test it
-        Long userId = 1L;
+        Long userId = userService.getCurrentAuthenticatedUserIdSafely();
         validateIsNotNull(userId, "No user id provided");
 
         List<Order> orders = orderDao.findAllByUserIdAndStatusCodeNot(userId, OrderStatus.CART.getValue());
@@ -113,8 +96,7 @@ public class OrderService {
     }
 
     private Order getOrderWithCartStatus() throws ValidationException {
-        //todo get current user from context
-        Long userId = 1L;
+        Long userId = userService.getCurrentAuthenticatedUserIdSafely();
 
         List<Order> orders = orderDao.findByUserIdAndStatusCode(userId, OrderStatus.CART.getValue());
         if (orders.size() > 1) {
@@ -132,36 +114,6 @@ public class OrderService {
         return order;
     }
 
-
-    private Order buildOrderFromOrderDto(OrderDto orderDto) {
-        Order order = new Order();
-        order.setStatus(orderDto.getStatus());
-        order.setComment(orderDto.getComment());
-
-        //todo validate that current user is equal to the one mentioned in order when Security added + test it
-        Long userId = 1L;
-
-        order.setUserId(userId);
-        // order.setChangeDateTime(orderDto.getChangeDateTime());
-
-        return order;
-    }
-
-
-    private List<OrderProduct> buildOrderProductsFromOrderDto(Order order, OrderDto orderDto) {
-        List<OrderProductDto> orderProductDtos = orderDto.getProducts();
-
-        if (orderProductDtos == null) {
-            return new ArrayList<>();
-        }
-
-        return orderProductDtos.stream()
-                .map(orderProductDto -> new OrderProduct(order.getId(),
-                        orderProductDto.getProductId(),
-                        orderProductDto.getQuantity()))
-                .collect(Collectors.toList());
-    }
-
     /**
      * The method is intended to update an order from status 'CART' to status 'UNACCEPTED'
      *
@@ -170,8 +122,7 @@ public class OrderService {
      */
     public void createFromCart(CreateOrderFromCartPostDto createOrderFromCartPostDto) throws ValidationException {
         validateIsNotNull(createOrderFromCartPostDto, "No order id provided");
-        //todo get current user from context
-        Long userId = 1L;
+        Long userId = userService.getCurrentAuthenticatedUserIdSafely();
 
         Order cartOrder = findUserCartOrder(userId);
 
@@ -182,8 +133,7 @@ public class OrderService {
     }
 
     public void createCartItem(Long productId) throws ValidationException {
-        //todo get current user from context
-        Long userId = 1L;
+        Long userId = userService.getCurrentAuthenticatedUserIdSafely();
 
         List<Order> orders = orderDao.findByUserIdAndStatusCode(userId, OrderStatus.CART.getValue());
         Order cartOrder;
@@ -213,8 +163,7 @@ public class OrderService {
 
     public void updateCartItem(OrderProductPostDto orderProductPostDto) throws ValidationException {
         validateIsNotNull(orderProductPostDto, "No DTO provided");
-        //todo get current user from context
-        Long userId = 1L;
+        Long userId = userService.getCurrentAuthenticatedUserIdSafely();
 
         Order cartOrder = findUserCartOrder(userId);
         Long orderId = cartOrder.getId();
@@ -233,8 +182,7 @@ public class OrderService {
 
     public void deleteCartItem(OrderProductPostDto orderProductPostDto) throws ValidationException {
         validateIsNotNull(orderProductPostDto, "No DTO provided");
-        //todo get current user from context
-        Long userId = 1L;
+        Long userId = userService.getCurrentAuthenticatedUserIdSafely();
 
         Order cartOrder = findUserCartOrder(userId);
         Long orderId = cartOrder.getId();

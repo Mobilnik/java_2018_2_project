@@ -23,14 +23,6 @@ public class ProductService {
     private final ProductDao productDao;
     private final ProductCategoryDao productCategoryDao;
 
-    public ProductDto get(Long productId) throws ValidationException {
-        validateIsNotNull(productId, "No Product id provided");
-
-        Product product = productDao.findOne(productId);
-        validateIsNotNull(product, "No Product with id " + productId);
-        return buildProductDto(product);
-    }
-
     public List<ProductDto> getAll() {
         return productDao.findAllBy().stream()
                 .map(this::buildProductDto)

@@ -18,7 +18,7 @@ const Menu = () => {
                 </div>
 
                 <div className={`${s.menuItem}`}>
-                    <NavLink to='/logout'> Logout </NavLink>
+                    <a href='/perform_logout'> Logout </a>
                 </div>
             </div>
         </nav>

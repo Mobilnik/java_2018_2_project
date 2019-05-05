@@ -5,7 +5,6 @@ import thunk from "redux-thunk";
 import ordersReducer from "./ordersReducer";
 import productsReducer from "./productsReducer";
 import cartReducer from "./cartReducer";
-import signUpReducer from "./signUpReducer";
 import {routerMiddleware, routerReducer} from "react-router-redux";
 import {createBrowserHistory} from 'history'
 
@@ -15,10 +14,9 @@ let reducers = combineReducers({
     ordersPage: ordersReducer,
     productsPage: productsReducer,
     cartPage: cartReducer,
-    signUpPage: signUpReducer
 });
 
-export let browserHistory = createBrowserHistory();
+export let browserHistory = createBrowserHistory({ basename: '/' });
 
 const middleware = applyMiddleware(promise, thunk, routerMiddleware(browserHistory));
 export let store = createStore(reducers, middleware);

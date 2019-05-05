@@ -101,7 +101,7 @@ export const setMustFetchOrdersCreator = (newValue) => {
 export const fetchOrdersCreator = () => {
     return {
         type: FETCH_ORDERS,
-        payload: axios.get("http://localhost:8080/mipt-shop/orders")
+        payload: axios.get("api/orders")
     }
 };
 

@@ -14,7 +14,7 @@ import ru.milandr.courses.miptshop.services.OrderService;
 import java.util.List;
 
 @RestController
-@RequestMapping("orders")
+@RequestMapping("api/orders")
 public class OrderController {
     private static final Logger log = LoggerFactory.getLogger(OrderController.class);
 

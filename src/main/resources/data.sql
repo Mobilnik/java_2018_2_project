@@ -56,4 +56,4 @@ INSERT INTO products(id, category_id, name, photo_url, price)
 VALUES (14, 6, 'Ovchinkin stand-ups: quantum physics', null, 450.0);
 
 INSERT INTO users(id, email, name, photo, password_hash, password_salt)
-VALUES (1, 'iaulitin@yandex.ru', 'iaulitin', null, null, null);
+VALUES (1, 'iaulitin@yandex.ru', 'iaulitin@yandex.ru', null, '3f3c474ca333a95b30c105221c88daa314a87c84','4bf68cb0a940c47e20ef30387a48171f');

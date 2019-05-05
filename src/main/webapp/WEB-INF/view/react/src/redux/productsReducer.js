@@ -203,7 +203,7 @@ const updateProductFilterText = (state, action) => {
 };
 
 const putProductToCart = (state, action) => {
-    axios.post("http://localhost:8080/mipt-shop/orders/create_cart_item?productId=" + action.productId);
+    axios.post("api/orders/create_cart_item?productId=" + action.productId);
     return state;
 };
 
@@ -219,7 +219,7 @@ export const setMustFetchProductsCreator = (newValue) => {
 export const fetchProductsCreator = () => {
     return {
         type: FETCH_PRODUCTS,
-        payload: axios.get("http://localhost:8080/mipt-shop/products")
+        payload: axios.get("api/products")
     }
 };
 

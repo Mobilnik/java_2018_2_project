@@ -94,6 +94,13 @@ public class UserService {
         }
     }
 
+    public long getCurrentAuthenticatedUserIdSafely() throws ValidationException {
+        User currentAuthenticatedUser = getCurrentAuthenticatedUser();
+        ValidationUtils.validateIsNotNull(currentAuthenticatedUser, "Current user is not presented");
+
+        return currentAuthenticatedUser.getId();
+    }
+
     public User getCurrentAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null) {

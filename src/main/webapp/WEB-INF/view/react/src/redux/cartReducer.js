@@ -96,7 +96,7 @@ const updateCartItemQuantity = (state, productId, newValue) => {
 };
 
 const httpUpdateCartItemQuantity = (itemToChange) => {
-    axios.post("http://localhost:8080/mipt-shop/orders/update_cart_item",
+    axios.post("api/orders/update_cart_item",
         buildOrderProductDto(itemToChange));
 };
 
@@ -122,7 +122,7 @@ const deleteCartItem = (state, productId) => {
 };
 
 const httpDeleteCartItem = (itemToDelete) => {
-    axios.post("http://localhost:8080/mipt-shop/orders/delete_cart_item",
+    axios.post("api/orders/delete_cart_item",
         buildOrderProductDto(itemToDelete));
 };
 
@@ -151,7 +151,7 @@ const createNewOrderFromCart = (state) => {
     let createOrderFromCartPostDto = {
         comment: stateCopy.cartOrderComment
     };
-    axios.post("http://localhost:8080/mipt-shop/orders/create_from_cart",
+    axios.post("api/orders/create_from_cart",
         createOrderFromCartPostDto);
 
     stateCopy.cartItems = [];
@@ -172,7 +172,7 @@ export const setMustFetchCartCreator = (newValue) => {
 export const fetchCartCreator = () => {
     return {
         type: FETCH_CART,
-        payload: axios.get("http://localhost:8080/mipt-shop/orders/cart")
+        payload: axios.get("api/orders/cart")
     }
 };
 

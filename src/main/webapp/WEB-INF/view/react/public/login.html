@@ -8,7 +8,7 @@
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
           integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <link rel="stylesheet" href="/mipt-shop/static/css/login.css">
+    <link rel="stylesheet" href="/static/css/login.css">
 
     <title>MIPT shop | Log in</title>
 </head>
@@ -17,7 +17,7 @@
 <noscript>You need to enable JavaScript to run this app.</noscript>
 
 <div id="logreg-forms">
-    <form action="/mipt-shop/perform_login" class="form-signin" method="post">
+    <form action="/perform_login" class="form-signin" method="post">
         <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Sign in</h1>
         <!--        <div class="social-login">
                     <button class="btn facebook-btn social-btn" type="button"><span><i class="fab fa-facebook-f"></i> Sign in with Facebook</span>
@@ -46,7 +46,7 @@
             <a href="#" id="cancel_reset"><i class="fas fa-angle-left"></i> Back</a>
         </form>-->
 
-    <form action="/mipt-shop/users/create" class="form-signup" method="post">
+    <form action="api/users/create" class="form-signup" method="post">
         <!--        <div class="social-login">
                     <button class="btn facebook-btn social-btn" type="button">
                         <span><i class="fab fa-facebook-f"></i> Sign up with Facebook</span>
@@ -102,7 +102,7 @@ $(()=>{
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-<script src="/mipt-shop/static/js/login.js"></script>
+<script src="/static/js/login.js"></script>
 </body>
 </html>
 

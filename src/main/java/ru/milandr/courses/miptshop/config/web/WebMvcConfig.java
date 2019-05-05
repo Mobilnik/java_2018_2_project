@@ -39,6 +39,9 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("/WEB-INF/view/react/build/static/");
 
+        registry.addResourceHandler("/images/**")
+                .addResourceLocations("/WEB-INF/view/react/build/images/");
+
         registry.addResourceHandler("/*.js")
                 .addResourceLocations("/WEB-INF/view/react/build/");
 

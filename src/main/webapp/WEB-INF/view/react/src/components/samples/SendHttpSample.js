@@ -19,7 +19,7 @@ class SendHttpSample extends Component {
     }
 
     handleClick () {
-        axios.get('http://localhost:8080/mipt-shop/products')
+        axios.get("/products")
             .then(response => {
                 console.log(response);
                 console.log(response.data);
