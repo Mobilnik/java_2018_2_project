@@ -7,14 +7,14 @@ const Menu = () => {
         <nav>
             <div className={`${s.menu}`}>
                 <div className={`${s.menuItem}`}>
-                    <NavLink to='/orders' activeClassName={s.activeLink}> My orders </NavLink>
+                    <NavLink to='orders' activeClassName={s.activeLink}> My orders </NavLink>
                 </div>
                 <div className={`${s.menuItem}`}>
-                    <NavLink to='/products' activeClassName={s.activeLink}> Products </NavLink>
+                    <NavLink to='products' activeClassName={s.activeLink}> Products </NavLink>
                 </div>
 
                 <div className={`${s.menuItem}`}>
-                    <NavLink to='/cart' activeClassName={s.activeLink}> Cart </NavLink>
+                    <NavLink to='cart' activeClassName={s.activeLink}> Cart </NavLink>
                 </div>
 
                 <div className={`${s.menuItem}`}>
